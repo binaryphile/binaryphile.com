@@ -1,3 +1,4 @@
-compiled/*
+compiled/
 themes/artisteer/
-themes/168_artisteer.artx
+*.artx
+S3Sync.exe.config
