@@ -1,16 +1,18 @@
-title : Blog Title
-tagline: Blog Tagline
+title : Binaryphile
+tagline: Bits and Bytes
 author :
-  name : Firstname Lastname
-  email : blah@email.test
-  github : username
-  twitter : username
-  feedburner : feedname
+  name : Ted Lilley
+  email : ted.lilley@gmail.com
+  github : lilleyt
+  twitter : lilleyt
 
 navigation :
-  - archive.html
-  - tags.html
-  - categories.html
-  - pages.html
-  - about.md
-  
+  - index.md
+
+rss:
+  title: Binaryphile RSS Feed
+  href: http://binaryphile.com/rss.html
+
+cufon:
+  - class: art-logo-name
+    font: Raspoutine Classic
