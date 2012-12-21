@@ -55,21 +55,19 @@ project you're working on.  There's no potential for one project's setup
 to adversely impact any other's that way.  Every project gets a clean
 environment over which it has full reign.
 
-If you have an existing Spree (or Rails) project, you clone it to your
-native machine, then create a vagrant vm from the same directory.  The
-vm doesn't actually live in the same directory but you manage it from
-there.  The project code is automatically shared with the vm through
-VirtualBox's shared folders facility, so you can work with the code in
-either your native environment or from within the vm, whichever you're
-more comfortable with.  You only need the vm to run and/or debug the
-code.
+When you bring up the vm, it has access to the directory you created it
+in, so you can make a new Spree instance or clone your existing one into
+a subfolder and work with the files on your native machine.  You only
+need the vm to run and debug the code.  Even the browsing is done with
+your native machine's browser by pointing it to `localhost:3000` when
+your app is running.
 
 Since the vm already has everything you need, you can typically clone
 your project, make sure you have database.yml properly configured,
-create the vm, connect to it, cd to /vagrant, bundle install,
-bundle exec rake db:bootstrap and bundle exec rails s.  On your native
-machine, browse to localhost:3000 and that's it!  You've got a working
-Spree sample store!
+create the vm, connect to it, cd to `/vagrant`, `bundle install`,
+`bundle exec rake db:bootstrap` and `bundle exec rails s`.  On your
+native machine, browse to localhost:3000 and that's it!  You've got
+a working Spree sample store!
 
 Of course, importing your database or creating a new store installation
 requires more steps than that, but the idea is that the vagrant vm
@@ -160,6 +158,20 @@ to > Desktop (create shortcut)_
 - Cut and paste the Pageant shortcut from your desktop to the _Startup_
   folder in the Start menu
 - Click the Pageant shortcut to start Pageant now
+
+Install the required chef recipes
+
+: You'll need the apt, mysql, ohmyzsh and system_packages recipes.
+
+: - Decide where your vagrant project directory will go
+- Make a sibling directory called `my-recipes`
+- Under that, make a directory called `cookbooks`
+- From `cookbooks`:
+    - `git clone git://github.com/opscode-cookbooks/apt.git`
+    - `git clone git://github.com/opscode-cookbooks/mysql.git`
+    - `git clone git://github.com/lilleyt/chef-ohmyzsh.git ohmyzsh`
+    - `git clone git://github.com/coroutine/chef-system_packages.git
+      system_packages`
 
 Import the vagrant box
 
@@ -274,6 +286,8 @@ Clone or create your project
 - `bundle install`
 - `bundle exec rake db:bootstrap` and answer the questions in the
   affirmative
+    - This creates the sample data and pictures.  Instructions for
+    importing real store data are outside my scope here.
 - `bundle exec rake assets:precompile:nondigest`
 - `bundle exec rails s`
 
