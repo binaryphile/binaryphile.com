@@ -1,6 +1,6 @@
-layout : false
+layout : disqus
 disqus :
-  short_name : jekyllbootstrap
+  short_name : binaryphile
 livefyre :
   site_id : 123
 intensedebate :
