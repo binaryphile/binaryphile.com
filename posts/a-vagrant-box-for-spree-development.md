@@ -281,6 +281,7 @@ Clone or create your project
 
 : - `git clone [project url]`
 - Make sure your Gemfile is set to work with mysql (`gem 'mysql2'`)
+- Make sure your Gemfile has v8, which is necessary on linux (`gem 'therubyracer', platforms: :ruby`)
 - If necessary, update `config/database.yml` to point to mysql with user
   `root` and no password
 - `bundle install`
