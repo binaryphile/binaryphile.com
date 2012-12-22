@@ -62,12 +62,12 @@ need the vm to run and debug the code.  Even the browsing is done with
 your native machine's browser by pointing it to `localhost:3000` when
 your app is running.
 
-Since the vm already has everything you need, you can typically clone
-your project, make sure you have database.yml properly configured,
-create the vm, connect to it, cd to `/vagrant`, `bundle install`,
-`bundle exec rake db:bootstrap` and `bundle exec rails s`.  On your
-native machine, browse to localhost:3000 and that's it!  You've got
-a working Spree sample store!
+Since the vm already has everything you need, you can create your vm,
+connect to it, `cd /vagrant`, clone your project, make sure you
+have database.yml properly configured, `bundle install`, `bundle
+exec rake db:bootstrap` and `bundle exec rails s`.  On your native
+machine, browse to localhost:3000 and that's it!  You've got a
+working Spree sample store!
 
 Of course, importing your database or creating a new store installation
 requires more steps than that, but the idea is that the vagrant vm
