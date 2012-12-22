@@ -126,6 +126,16 @@ Windows: Install Putty
 
 : You get the idea.  Here's the [Putty documentation].
 
+Install Vagrant's VirtualBox Guest Additions upgrader
+
+: If you installed Vagrant from an installer, do:
+
+: `vagrant gem install vagrant-vbguest`
+
+: If you installed Vagrant as a gem, do:
+
+: `gem install vagrant-vbguest`
+
 Windows: Import the ssh key
 
 : - From the Start menu, open _Putty > Puttygen_
