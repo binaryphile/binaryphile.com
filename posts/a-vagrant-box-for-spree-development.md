@@ -97,6 +97,9 @@ Prerequisites
 - Download the latest [VirtualBox] for your platform
 - Download the latest [Vagrant] for your platform
 - Download the [Ubuntu 12.04.1 LTS] box
+    - If you can't run 64-bit vms, then try this [32-bit Ubuntu]
+    instead.  Import it as `precise32` and change the name of the box in
+    the Vagrantfile to match.
 - Save [this text] into a file called `Vagrantfile`
 
 Be aware that the Ubuntu LTS server is ssh command-line only, no gui.
@@ -358,6 +361,7 @@ Happy Spreeing!
 [RubyInstaller]: http://rubyinstaller.org/downloads/
 [Vagrant]: http://downloads.vagrantup.com/
 [Ubuntu 12.04.1 LTS]: http://dl.dropbox.com/u/1537815/precise64.box
+[32-bit Ubuntu]: http://files.vagrantup.com/precise32.box
 [this text]: https://gist.github.com/raw/4260060/a17328cfd6ca011ef6b16f904a401ec0ecc5fb70/Vagrantfile
 [Putty]: http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
 [VirtualBox installation instructions here]: https://www.virtualbox.org/manual/ch02.html
