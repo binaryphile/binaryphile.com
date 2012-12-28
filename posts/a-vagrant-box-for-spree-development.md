@@ -228,6 +228,7 @@ see an example of [the output of this step on my system here].
     - oh-my-zsh
     - rvm (user installation)
     - ruby 1.9.3 latest
+        - Note: I've had problems with Ruby 1.9.3-p362.  You may want to edit the Vagrantfile to specifically install "1.9.3-p327".
     - imagemagick with dev libraries (libmagickwand-dev)
     - ranger
     - tmux
