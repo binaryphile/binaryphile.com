@@ -47,6 +47,16 @@ work on project files in your regular editor on your native system and
 immediately see the results in the vm's runtime environment.  You can do
 pretty much everything except debug on your native system.
 
+: I should note, however, that the convenience of the shared folders
+feature comes at a price.  Afer having used this configuration for a
+while, I became dissatisfied with the performance of my box.  I tweaked
+a few things with no luck, until I thought to copy the files from
+`/vagrant` to my home directory and run from there.  What a difference.
+If you're on Linux or MacOS, you may be able to use NFS to achieve
+shared files without relying on the non-performant shared folders in
+virtualbox.  You can find a suggestion here:
+http://www.uvd.co.uk/blog/labs/setting-up-a-debian-virtualbox-for-web-development/
+
 Usage
 =====
 
