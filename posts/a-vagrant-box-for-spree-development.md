@@ -57,6 +57,12 @@ shared files without relying on the non-performant shared folders in
 virtualbox.  You can find a suggestion here:
 <http://www.uvd.co.uk/blog/labs/setting-up-a-debian-virtualbox-for-web-development/>
 
+: Since my host is Windows, I don't have NFS, so instead I'm
+investigating Dropbox within the guest as my sharing solution, using a
+Dropbox account dedicated for the purpose so I don't download my entire
+Dropbox into the vm.  I'm using this post:
+<http://rbgeek.wordpress.com/2012/08/19/how-to-install-and-configure-dropbox-on-ubuntu-server-12-04-lts/>
+
 Usage
 =====
 
