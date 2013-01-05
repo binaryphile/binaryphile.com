@@ -55,7 +55,7 @@ a few things with no luck, until I thought to copy the files from
 If you're on Linux or MacOS, you may be able to use NFS to achieve
 shared files without relying on the non-performant shared folders in
 virtualbox.  You can find a suggestion here:
-http://www.uvd.co.uk/blog/labs/setting-up-a-debian-virtualbox-for-web-development/
+<http://www.uvd.co.uk/blog/labs/setting-up-a-debian-virtualbox-for-web-development/>
 
 Usage
 =====
