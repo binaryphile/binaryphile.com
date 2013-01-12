@@ -487,7 +487,7 @@ state's new position, so it can stay unchanged.
 
 ~~~
 .signup>span.art-button-wrapper>span.art-button-l, .signup>span.art-button-wrapper>span.art-button-r {
-  background-image: url('../media/signup_bg_button.png')
+  background-image: url('images/signup_bg_button.png')
 }
 
 .signup>span.art-button-wrapper>span.art-button-l {
