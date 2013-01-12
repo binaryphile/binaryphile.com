@@ -8,7 +8,7 @@ categories: vagrant
 Why would you want to share vagrant project files over Dropbox?  What
 are Vagrant project files anyway?
 
-Vagrant is a way to automatically manage virtualbox vms on your local
+[Vagrant] is a way to automatically manage virtualbox vms on your local
 machine.  I use vagrant primarily to give me clean linux environments in
 which to run my rails projects.  Since I'm on windows and windows
 doesn't run rails very well as of right now, it makes developing much
@@ -80,8 +80,13 @@ machine uuid for the vagrant vm.  Here's my method.
 - `vagrant halt` the vm
 - Open the original `.vagrant` (the one you copied) file in a text
   editor and copy the uuid (minus any quotes)
-    - This should look like `85a3496f-b51e-407b-b270-d0c7fbee2b01`
+    - This should look like `85a3496f-b51e-407b-b270-d0c7fbee2b01` (but
+    not that exact one, look for the one in your file)
+    - Don't mix up the vm uuid for the disk uuid
 - Copy the original `.vagrant` over the new one, overwriting it
+- Make sure there are no virtualbox processes running - _VBoxSVC.exe_ is
+  one that tends to stick around for a while after you close virtualbox,
+  so make sure it's gone
 - In your home directory, find `.Virtualbox\Virtualbox.xml` and open in
   a text editor
 - Find the `MachineRegistry` key with the same name as your project and
@@ -96,5 +101,17 @@ machine uuid for the vagrant vm.  Here's my method.
 You only need to do this on the machine with the second vm, since you're
 pasting the uuid that the first is already configured with.
 
+Before trying to start the new vm, verify that the uuid has taken
+effect.  Use the `vboxmanage` command to list the vms:
+
+    vboxmanage list vms
+
+If you get a message about the vm being inaccessible, there was probably
+a virtualbox process sticking around that overwrote one or both of the
+files you changed.  Check them again and if the uuid has changed, fix
+it.
+
 You should now be able to start the vm on either machine without losing
 your existing vm.
+
+[Vagrant]: http://www.vagrantup.com/
