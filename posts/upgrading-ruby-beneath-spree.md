@@ -2,7 +2,9 @@
 title: Upgrading ruby beneath Spree
 date: '2013-01-25'
 description:
-categories: [spree, ruby]
+categories:
+  - spree
+  - ruby
 tags: []
 ---
 Ruby can be tricky to upgrade. When I went from ruby-1.9.3-p192 to
