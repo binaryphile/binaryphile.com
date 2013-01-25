@@ -29,7 +29,9 @@ Rather than do that, I did some quick research and decided to update
 rvm with `rvm get latest`.  This worked, but I did an extra `rvm reload`
 anyway just to be sure.  Unfortunately, I forgot to do the reload in my
 other open shell window as well, so it gently reminded me to do so when
-I tried using it.
+I tried using it.  Not only that, even after rvm had been reloaded I had
+trouble with gems being found after the ruby upgrade.  I had to reload
+rvm once more after the ruby upgrade completed for bundler to work.
 
 After doing the update, rvm was then able to upgrade ruby to p374.
 However the gemset pristine portion of the upgrade failed due to not
@@ -56,5 +58,6 @@ So the routine is basically:
 
 - `rvm get latest` (remember to `rvm reload` all windows)
 - `rvm upgrade [old version] [new version]`
+- `rvm reload`
 - `bundle update`
 - `gem pristine debugger-linecache`

@@ -7,7 +7,7 @@ categories: spree
 
 - `gem update --system`
 - `gem update bundler`
-- `rvm update ruby-1.9.3-p129 ruby-1.9.3-p327`
+- `rvm upgrade ruby-1.9.3-p129 ruby-1.9.3-p327`
 - `gem update rails -v 3.2.9`
 - `gem update spree -v 1.2.2`
 - `rails new spree_dibs -d mysql`
@@ -69,4 +69,3 @@ categories: spree
 - Export data with `mysqldump -u[user] [database] > [filename.sql]`
 - Go to production system
 - Make new directory
-
