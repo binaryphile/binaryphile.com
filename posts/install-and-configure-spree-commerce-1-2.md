@@ -25,7 +25,7 @@ categories: spree
   - `drop schema spree_dibs_bootstrap; create schema spree_dibs_bootstrap;`
   - `drop schema spree_dibs_test; create schema spree_dibs_test;`
 - `spree install`
-  - Default gateways: no
+  - Default gateways: no (we'll be installing it ourselves)
   - Default authentication: yes
   - Migrations: yes
   - Seed data: yes
