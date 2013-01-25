@@ -244,7 +244,8 @@ see an example of [the output of this step on my system here].
     - oh-my-zsh
     - rvm (user installation)
     - ruby 1.9.3 latest
-        - <del>Note: I've had problems with Ruby 1.9.3-p362.  You may want to edit the Vagrantfile to specifically install "1.9.3-p327".</del>  Ruby 1.9.3-p374 has been released and fixes the p362 issue, so you can probably use this file unchanged.
+        - <del>Note: I've had problems with Ruby 1.9.3-p362.  You may want to edit the Vagrantfile to specifically install "1.9.3-p327".</del>  
+          Ruby 1.9.3-p374 has been released and fixes the p362 issue, so you can probably use Vagrantfile unchanged.
     - imagemagick with dev libraries (libmagickwand-dev)
     - ranger
     - tmux
