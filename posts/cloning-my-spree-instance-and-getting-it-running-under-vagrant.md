@@ -8,6 +8,21 @@ categories:
 tags: []
 ---
 
+These are my personal notes on how to get my Spree instance running
+under Vagrant.  You may find them helpful too, and in fact, you can
+actually clone and run my store (minus the all-important store database,
+but you can do a `bundle exec rake db:bootstrap` to load the sample
+data).
+
+Note my store is configured to use mysql.  The platform I run this on is
+Ubuntu 12.04.1 for development, which closely matches my production
+environment.  I highly recommend running your development in a vm that
+matches your production environment so as not to be caught flat-footed
+at the moment of deployment because you were unaware of a platform
+incompatibility.  Not only that, cheap vms serve as the cleanest dev
+environments and save you from gem cache pollution without needing to
+worry about rvm (even though I still use rvm for ruby upgrades).
+
 - Make a new folder with the instance name
 - Go to command line in the folder and `vagrant init`
 - Copy `.vagrant` as a backup
@@ -29,8 +44,10 @@ tags: []
   `spree_dibs_[major].[minor]/Gemfile.lock`
     - If the revision isn't in the repo, add the upstream, `fetch --all`
     and try again
+- `cd spree_dibs_[major].[minor]`
+- `cp config/database.yml.original config/database.yml`
 - `bundle install`
 - `bundle exec rake assets:precompile:nondigest`
-- Copy the `public/spree` folder from another instance or production
+- Copy the `public/spree` folder from production or another instance
 
 Test with `bundle exec rails s`
