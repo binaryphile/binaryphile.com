@@ -6,6 +6,15 @@ categories: artisteer
 tags: []
 ---
 
+Note: I wrote this post while using version 3 of Artisteer.  Since that
+time, Artisteer has changed the way they do buttons in version 4.  I
+haven't looked at it fully, but it appears they have gone from using
+graphics to just CSS, which is good and bad.  It's good because it's
+easier to modify pure-CSS buttons for, say, color.  It's bad because
+we've lost the javascript, CSS and markup that make the technique shown
+here to work.  If I figure out how to retrofit it onto version 4, I'll
+show how in another post.
+
 [Artisteer] is a great web design tool for those of us who aren't
 professional front-end designers.  It gives you the tools to make
 designs that are flexible and don't suck without having to be a css or
@@ -444,8 +453,6 @@ itself, so we'll start with:
   color: #FFFFFF !important;
 }
 ~~~
-
-&nbsp;
 
 : The important things to note are that the `.signup` class makes these
 selectors more specific than the regular Artisteer ones.  We're only
