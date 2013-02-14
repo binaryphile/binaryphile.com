@@ -3,6 +3,7 @@ title: Artisteer 4's button design
 date: '2013-02-14'
 description: A followup to my last post about using and designing Artisteer-friendly buttons
 categories: artisteer
+type: draft
 ---
 
 Earlier, I published [a post] on how Artisteer 3 does its buttons.  I

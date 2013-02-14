@@ -2184,6 +2184,7 @@ span.art-button-wrapper input
   color: #FFFFFF !important;
 }
 
+/* Fixes for responsive css on iPad etc. */
 
 .art-blockheader .t, .art-vmenublockheader .t {white-space: nowrap;}
 

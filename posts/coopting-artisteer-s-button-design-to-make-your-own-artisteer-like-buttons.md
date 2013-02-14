@@ -570,11 +570,16 @@ That's it!
 
 ### The finished article
 
-<del>Here's a sample of our new button, with the old one for
-comparison:</del>
+Here's a sample of our new button, with the old one for
+comparison.
 
-<span class="signup"><a href="#" class="art-button">Sign up now!</a></span>
-<a href="#" class="art-button">Sign up now!</a>
+Note that the css for the button on this page has been updated to use
+the class `art-button-old` instead of `art-button`.  This is because the
+upgrade of the blog theme to Artisteer 4 required me to change the name
+of the class and manually add in the old Artisteer 3 css.
+
+<span class="signup"><a href="#" class="art-button-old">Sign up now!</a></span>
+<a href="#" class="art-button-old">Sign up now!</a>
 
 This blog used to use Artisteer 3, so the button example worked, but has
 since been upgraded to Artisteer 4, which does buttons differently, so
