@@ -6,6 +6,9 @@ categories: artisteer
 tags: []
 ---
 
+Note: I've created a [new post] detailing how the new buttons work in
+Artisteer 4.
+
 Note: I wrote this post while using version 3 of Artisteer.  Since that
 time, Artisteer has changed the way they do buttons in version 4 (this
 also means that the button at the end of this post no longer renders
@@ -455,6 +458,8 @@ itself, so we'll start with:
 }
 ~~~
 
+&nbsp;
+
 : The important things to note are that the `.signup` class makes these
 selectors more specific than the regular Artisteer ones.  We're only
 overriding the properties which we want to change however, and the rest
@@ -565,11 +570,17 @@ That's it!
 
 ### The finished article
 
-Here's a sample of our new button, with the old one for comparison:
+<del>Here's a sample of our new button, with the old one for
+comparison:</del>
 
 <span class="signup"><a href="#" class="art-button">Sign up now!</a></span>
 <a href="#" class="art-button">Sign up now!</a>
 
+This blog used to use Artisteer 3, so the button example worked, but has
+since been upgraded to Artisteer 4, which does buttons differently, so
+this example no longer works.
+
+[new post]: /artisteer/artisteer-4-s-button-design
 [Artisteer]: http://www.artisteer.com/
 [background]: {{urls.media}}/button.png
 [button]: {{urls.media}}/signup-button.png

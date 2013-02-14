@@ -451,11 +451,11 @@ else gets a maintenance page telling them when the store will be back up
 and how to get their order taken by phone.
 
 : Before you do this, however, you'll want to prep the upgrade instance
-(the old version of the store) on your development machine.  
-Drop and recreate the spree_dibs_upgrade schema, then use git checkout
-and git clean to revert your files to the pre-upgrade state.  Note that
-you don't need to do a rake db:schema:load since the regular mysqldump
-will build the schema for you.
+(the old version of the store) on your development machine.  Drop and
+recreate the spree_dibs_upgrade schema, then use git checkout and git
+clean to revert your files to the pre-upgrade state.  Note that you
+don't need to do a rake db:schema:load since the regular mysqldump will
+build the schema for you.
 
 : Once the upgrade instance is ready, put up your maintenance page
 (check it from an outside machine to make sure), then go to the
@@ -465,8 +465,9 @@ it and run the store once to make sure everything looks kosher.
 : Perform the upgrade again, remembering to run all migrations.  Run the
 store again on the upgraded db to verify.
 
-: Dump the db with the `-ct` options, then load it into your new store.
-Run the new store to verify.
+: Dump the db with the `-ct` options.  Drop and recreate the new store's
+schema, run `bundle exec rake db:schema:load`, then load it into your
+new store.  Run the new store to verify.
 
 : Finally, dump the new database with the regular mysqldump command (no
 `-ct`) and scp it back to your production machine.  Drop and create the
@@ -479,8 +480,8 @@ to change to the new repo.  This tells capistrano to re-clone it from
 the new git repo when you deploy.
 
 : Still on the production machine, go to the `/data/spree/shared/log`
-directory and run `tail -f unicorn-error.log`.  You'll want to watch for
-any problems which occur when you run the deploy.
+directory and run `tail -f unicorn.stderror.log`.  You'll want to watch
+for any problems which occur when you run the deploy.
 
 : Finally, on your development machine, run `cap deploy` and cross your
 fingers.  If all goes well, you've finished your upgrade.  Test the

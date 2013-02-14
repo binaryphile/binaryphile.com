@@ -2016,6 +2016,126 @@ dt { font-weight: bold; }
 .ie7 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 .ie6 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
 
+/* begin Button */
+span.art-button-wrapper>a.art-button-old,
+span.art-button-wrapper>a.art-button-old:link,
+span.art-button-wrapper>input.art-button-old,
+span.art-button-wrapper>button.art-button-old
+{
+   text-decoration: none;
+   font-family: Georgia, "Times New Roman", Times, Serif;
+   font-size: 14px;
+   position:relative;
+   top:0;
+   display: inline-block;
+   vertical-align: middle;
+   white-space: nowrap;
+   text-align: center;
+   color: #133958 !important;
+   width: auto;
+   outline: none;
+   border: none;
+   background: none;
+   line-height: 31px;
+   height: 31px;
+   margin: 0 !important;
+   padding: 0 20px !important;
+   overflow: visible;
+   cursor: pointer;
+   text-indent: 0;
+}
+
+.art-button-old img, span.art-button-wrapper img
+{
+   margin: 0;
+   vertical-align: middle;
+}
+
+span.art-button-wrapper
+{
+   vertical-align: middle;
+   display: inline-block;
+   position: relative;
+   height: 31px;
+   overflow: hidden;
+   white-space: nowrap;
+   text-indent: 0;
+   width: auto;
+   max-width:1000px;
+   margin: 0;
+   padding: 0;
+   z-index: 0;
+}
+
+.firefox2 span.art-button-wrapper
+{
+   display: block;
+   float: left;
+}
+
+span.art-button-wrapper.hover>.art-button-old, span.art-button-wrapper.hover>a.art-button-old:link
+{
+   color: #FFFFFF !important;
+   text-decoration: none !important;
+}
+
+span.art-button-wrapper.active>.art-button-old, span.art-button-wrapper.active>a.art-button-old:link
+{
+   color: #FFFFFF !important;
+}
+
+span.art-button-wrapper>span.art-button-l, span.art-button-wrapper>span.art-button-r
+{
+   display: block;
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   margin: 0;
+   padding: 0;
+   background-image: url('../media/button.png');
+   background-repeat: no-repeat;
+}
+
+span.art-button-wrapper>span.art-button-l
+{
+   left: 0;
+   right: 5px;
+   background-position: top left;
+}
+
+span.art-button-wrapper>span.art-button-r
+{
+   width: 5px;
+   right: 0;
+   background-position: top right;
+}
+
+span.art-button-wrapper.hover>span.art-button-l
+{
+   background-position: center left;
+}
+
+span.art-button-wrapper.hover>span.art-button-r
+{
+   background-position: center right;
+}
+
+span.art-button-wrapper.active>span.art-button-l
+{
+   background-position: bottom left;
+}
+
+span.art-button-wrapper.active>span.art-button-r
+{
+   background-position: bottom right;
+}
+
+span.art-button-wrapper input
+{
+   float: none !important;
+}
+/* end Button */
+
 .signup>span.art-button-wrapper {
   height: 70px;
 }
@@ -2037,7 +2157,7 @@ dt { font-weight: bold; }
 }
 
 .signup>span.art-button-wrapper>span.art-button-l, .signup>span.art-button-wrapper>span.art-button-r {
-  background-image: url('images/signup_bg_button-2.png')
+  background-image: url('../media/signup_bg_button-2.png')
 }
 
 .signup>span.art-button-wrapper>span.art-button-l {

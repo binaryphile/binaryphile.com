@@ -32,8 +32,11 @@ worry about rvm (even though I still use rvm for ruby upgrades).
     - vm already has all the prereqs installed and a copy of the db
 - Make sure other vagrant vms aren't running and `vagrant up`
 - Log onto the new vm and copy ssh key in
-- Run my sync alias `sin` to copy `/vagrant` to `~/vagrant` for
-  performance reasons
+    - Change authorized to my key
+    - Add private key (with passphrase)
+- _Change the account password_
+- Run my sync alias `sin` to copy `/vagrant` to `~/vagrant` for performance
+  reasons
 - `cd vagrant`
 - `git clone git@github.com:lilleyt/spree_dibs_[major].[minor]`
 - `git clone git@github.com:lilleyt/spree_flexi_variants`
@@ -42,12 +45,14 @@ worry about rvm (even though I still use rvm for ruby upgrades).
 - `git clone git@github.com:lilleyt/spree_print_invoice`
 - Visit each directory, check out the current commit listed in
   `spree_dibs_[major].[minor]/Gemfile.lock`
-    - If the revision isn't in the repo, add the upstream, `fetch --all`
-    and try again
+    - If the revision isn't in the repo, add the upstream, `fetch --all` and
+    try again
 - `cd spree_dibs_[major].[minor]`
 - `cp config/database.yml.original config/database.yml`
-- `bundle install`
+- `bundle install --without production`
+- Either copy in your production db (mysqldump, create schema and mysql) or
+  `bundle exec rake db:bootstrap`
+    - If you bring in your production db, copy the `public/spree` folder from
+    production or another instance
 - `bundle exec rake assets:precompile:nondigest`
-- Copy the `public/spree` folder from production or another instance
-
-Test with `bundle exec rails s`
+- Test with `bundle exec rails s`
