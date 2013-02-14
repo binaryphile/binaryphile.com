@@ -9,15 +9,14 @@ tags: []
 Note: I've created a [new post] detailing how the new buttons work in
 Artisteer 4.
 
-Note: I wrote this post while using version 3 of Artisteer.  Since that
-time, Artisteer has changed the way they do buttons in version 4 (this
-also means that the button at the end of this post no longer renders
-properly).  I haven't looked at it fully, but it appears they have gone
-from using graphics to just CSS, which is good and bad.  It's good
-because it's easier to modify pure-CSS buttons for, say, color.  It's
-bad because we've lost the javascript, CSS and markup that make the
-technique shown here to work.  If I figure out how to retrofit it onto
-version 4, I'll show how in another post.
+<del>Note: I wrote this post while using version 3 of Artisteer.  Since that
+time, Artisteer has changed the way they do buttons in version 4.  I
+haven't looked at it fully, but it appears they have gone from using
+graphics to just CSS, which is good and bad.  It's good because it's
+easier to modify pure-CSS buttons for, say, color.  It's bad because
+we've lost the javascript, CSS and markup that make the technique shown
+here to work.  If I figure out how to retrofit it onto version 4, I'll
+show how in another post.</del>
 
 [Artisteer] is a great web design tool for those of us who aren't
 professional front-end designers.  It gives you the tools to make
@@ -578,12 +577,8 @@ the class `art-button-old` instead of `art-button`.  This is because the
 upgrade of the blog theme to Artisteer 4 required me to change the name
 of the class and manually add in the old Artisteer 3 css.
 
-<span class="signup"><a href="#" class="art-button-old">Sign up now!</a></span>
-<a href="#" class="art-button-old">Sign up now!</a>
-
-This blog used to use Artisteer 3, so the button example worked, but has
-since been upgraded to Artisteer 4, which does buttons differently, so
-this example no longer works.
+<span class="signup">[Sign up now!](#){: .art-button-old}</span>
+[Sign up now!](#){: .art-button-old}
 
 [new post]: /artisteer/artisteer-4-s-button-design
 [Artisteer]: http://www.artisteer.com/
