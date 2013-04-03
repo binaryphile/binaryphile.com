@@ -13,12 +13,4 @@
   {{# site.rss }}
     <link rel="alternate" type="application/rss+xml" title="{{ title }}" href="{{ href }}" />
   {{/ site.rss }}
-  {{# site.cufon }}
-    <script type="text/javascript">
-      {{# .replace }}
-  	     Cufon.replace('.{{ class }}', {fontFamily: '{{ font }}'});
-      {{/ .replace }}
-  	</script>
-  {{/ site.cufon }}
-  {{{ page.head-data }}}
 </head>
