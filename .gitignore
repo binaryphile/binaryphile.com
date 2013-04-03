@@ -2,3 +2,5 @@ compiled/
 themes/artisteer/artisteer/
 *.artx
 S3Sync.exe.config
+.bundle
+
