@@ -3,90 +3,145 @@ title: Simple, semantic table layout for non-table markup
 date: '2013-04-03'
 description: "This post describes how to use display: table and company to add table-like layout to non-table markup (such as forms) without impacting the semantics of the markup."
 categories: css
-tags: []
-type: draft
 ---
 
-If you're familiar with HTML tables, by this point you know that they're
-frowned upon for doing anything other layout of actual tabular data.
-Back in the day they were valued for the control they gave over layout,
-but have since been stigmatized for the amount of presentation-related
-information they impart to markup elements rather than stylesheets,
-where presentation information belongs.
+What it is
+----------
 
-I have to say, I'm no CSS expert by any means, so I can't give you a
-strict explanation that gives you much more insight than that, but
-having read a lot of articles on the subject, I can tell you that there
-aren't a lot of others who can tell you much more about why it's wrong.
-I just trust that when I see a lot of tr and td tags with multi-level
-structural dependencies and lots of angle brackets, there's something
-wrong.  There has to be a better way.
+A css file and markup technique for putting form fields into a regular,
+columnal format that degrades gracefully without css by the use of css
+2.1 table display property values.
 
-Recently I was given an assignment to deal with a mongo-sized,
-multi-page form.  In the process of my first pass at it, I realized that
-I needed a few things from a layout:
+How to get it
+-------------
 
-- table basis
-- ability to span cells for long labels (for that checkbox on its own
-  row with a long explanatory label)
-- ability to pack smaller fields into a cell or extend outside a cell
-- accomodate fieldsets (think like state and zip fields that don't need
-  full columns)
-- do these things without losing the flow of the rest of the table, so
-  cells at the bottom still affect the width of their column as a whole
+See [this gist].
 
-### Table Basis
+How to use it
+-------------
 
-Some sites advocate the "label above the field", single-column layout.
-I can understand the simplicity of this approach and how it doesn't
-require a lot of the user's eye, which is good.  It's not the most
-economical use of page space, however, and when you've got more fields
-than you can shake a stick at, it's a lot of scrolling.  Personally, I
-like a tabular layout when you've got a dense form, with the labels to
-the left of the fields and with multiple columns.
+Add the css to the rest of the css for your site.  When creating a form,
+decide whether you'll be using lists or divs.  The basic list version
+looks like:
 
-When it comes to multiple columns, it seems that for a while, floats
-were the preferred method.  More recently, display: inline-block with an
-assigned width or min-width is what I've seen recommended as "modern".
-Both methods have drawbacks that I won't try to explain, I'll just say
-that I've found them non-intuitive.  I just want a good, old-fashioned
-table whose workings are pretty easy to understand for just about
-anyone.  For those interested, there is a good [article on the various
-layout alternatives].
+~~~
+<form>
+  <ul class="tel-tabular">
+    <li> <!-- each li is a row -->
+      <label>Field 1:</label><input>
+      <label>Field 2:</label><input>
+    </li>
+    <li>
+      <label>Field 3:</label><input>
+      <label>Field 4:</label><input>
+    </li>
+  </ul>
+</form>
+~~~
 
-We're going to use the seemingly under-appreciated `display: table-*`
-property values.  These properties impart the behavior of table elements
-to markup entirely through css, and make the browser anonymously create
-any missing structure of the table (e.g. wrapping table-cells in a
-table-row).  Here is [a good article on `display: table`].
+For more details, read the rest of the article.
 
-If you aren't familiar with using the __display: table*__ property
-values, let's take a moment to understand what's going on with the
-tabular layout (with css).
+Introduction
+------------
 
-Whenever the rendering engine sees table-related display property values
-that are on their own, say a table-row without an enclosing table, it
-creates the minimum set of required table elements surrounding and/or
-inside the element to complete a table.  The [rules for table generation
-are available from the W3C].
+In this article I'll show you how to use css to turn form markup into a
+nice table layout.  The great thing about tables is that all of the
+cells in a row get sized properly to align with everything else in their
+column.  Forms look particularly nice this way they are usually tabular,
+with labels in the first column and inputs in the second.  You may even
+want to have more than one field in a row, but you still want the
+columns to size to the width of their widest content.
 
-So if you have an element that has the __table-row__ property value, an
-anonymous __table__ element is created as a parent (you can't see this
-in the DOM afaik).  Then, the elements below are enclosed in anonymous
-cells, being glommed together until a non-cell compatible element is
-found (usually one with the __table-row__ property value.
+There are a number of other techniques to layout forms, and they keep
+evolving.  This technique has the advantages that it's truly table-based
+without the table markup.  You get automatic column sizing, so you don't
+need to know the width of your content a priori like you do with other
+techniques.  This is especially handy if you simply don't know the width
+of your content.  For example, you may be pulling field names from a
+database or you may be pulling translations for field names for
+internationalization purposes.  The table approach works best for these
+situations.
 
-Likewise, the simplest method sometimes is to designate some sibling
-elements as __display: table-cell__, just on their own with no other
-table-related elements.  These cells will join together as neighbor
-cells inside an anonymous row inside an anonymous table.  Pretty cool.
-In fact, the only difficulty with that is that when you want to wrap to
-a new row, you need to introduce a non-cell element surrounding or
-between the rows (such as a blank __div__ or something with the
-__table-row__ property value).  This means you can create tables with
-leaner markup than a true __table__.
+I'll also show you how to handle some of the common exeptions to the
+layout without blowing the layout as a whole.  For example, you may need
+to have one row in the midst of others whose cell size would be much
+shorter or longer than you'd want for the others.  I'll show you how to
+handle those rows while still keeping the preceding and following rows
+connected in the same table, so the column widths apply throughout.
+I'll also show you how to put fieldsets in the flow of the form without
+breaking things into separate tables.
 
-Let's start with this:
+This approach is fairly flexible in the markup it accepts.  You can do
+div-based forms or list-based forms, although you may have to adapt your
+normal method to the structure required here.  In any case, this
+flexibility is designed so you can write markup which degrades
+gracefully without css, so you get something that is perhaps not as
+pretty, but still true to the spirit of the layout.
+
+This technique works for current versions of Chrome, IE and Firefox,
+with minor tweaking of some widths for the advanced features.  I don't
+know how far back you need to go before you start to lose support.
+Anything that supports css 2.1 should work.
+
+I haven't gone into any of the explanations behind the css because while
+I meant to, the time consumed in developing it proved to be too much so
+I'm posting what I can.  I hope to come back to it and do a more
+detailed explanation.
+
+Why not html tables, floats or inline-blocks?
+---------------------------------------------
+
+The historical ways that you can create a multi-column table-like layout
+is to use one of these three methods.  However:
+
+- Html tables are frowned upon for anything other than tabular data by
+just about everyone nowadays.
+- With floats, it's difficult to get columns to match in height like
+table columns do automatically.  Floats end up being column-oriented and
+I want row-oriented markup which is degrades gracefully to non-styled
+layout.
+- Inline-blocks are pretty good, but require you to know the widest
+width of a given column and set a minimum-width on all of the elements.
+If you are creating content on-the-fly, you can't know its width a
+priori.  That can and will blow the layout.  Where it really falls down
+are internationalized apps where you may have no idea what your widths
+are going to be.
+
+Basic form
+----------
+
+I designed the css for either list-based or div-based forms.  I'll show
+list markup then explain the div version.
+
+This example supposes that you want a four column form, one column each
+for a couple label/input pairs.
+
+The markup:
+
+~~~
+<form>
+  <ul class="tel-tabular">
+    <li> <!-- each li is a table row -->
+      <label>Field 1:</label>
+      <input>
+      <label>Field 2:</label>
+      <input>
+    </li>
+    <li>
+      <label>Field 3:</label>
+      <input>
+      <label>Field 4:</label>
+      <input>
+    </li>
+  </ul>
+</form>
+~~~
+
+What you get here is a two-row table with two label/input pairs per row.
+If you change the content of any element, the layout will adjust and
+keep everything in columns as you would expect of a table.
+
+The css:
 
 ~~~
 .tel-tabular > * {
@@ -95,293 +150,377 @@ Let's start with this:
 
 .tel-tabular > * > * {
   display: table-cell;
+  padding-right: 0.3em;
+}
+
+.tel-tabular input {
+  margin-right: 1em;
+}
+
+label {
+  text-align: right;
 }
 ~~~
 
-Now, before you jump on me for using universal selectors (the \*'s),
-bear these two things in mind:
+I've put in some of my own preferences for display such as
+right-alignment of labels, etc.
 
-- you can adapt this css to just as easily use selectors for particular
-  elements or classes as you see fit and it will work just as well.  I
-  use the \*'s for convenience, flexibility of markup that will match
-  the selectors, and to show you that it's possible to do by just
-  specifying the _structure_ of the markup without specifying the _type_
-  of your markup.
-- the performance penalty for using such a selector is more than
-  compensated for by the fact that it's accompanied by the direct-child
-  limitation (the >'s).  It may costly to search an entire dom subtree
-  for a universal selector but it's rarely costly to search just the
-  children of an element.
+Note that you can just as easily make a 6-column layout (or any you
+want) just by adding elements to each li.
 
-So what's this tell us?  There are two rules here, and the first one
-says to make table rows out of the children of the element with the
-class __tel-tabular__.  The classname __tel-tabular__ is just a
-description of what we're trying to achieve, prefixed with my initials
-so that it is namespaced to some degree and shouldn't conflict with your
-existing classnames.
+Using divs instead of ul
+------------------------
 
-The second rule says to make all children of those rows into cells.  So
-whatever kind of markup elements you have at two layers below the one
-assigned the __tel-tabular__ class will be placed in separate columns
-(even if the elements at that level aren't all the same kind).
-
-So what this does is to make tabular any dual-level markup _under_ the
-element which you give the __tel-tabular__ class.  The first level
-elements underneath define the rows and the next level under that define
-the content in the columns.  Any tag works at any of these levels, they
-are all acceptable.
-
-This is pretty flexible (without being unperformant).  It works with
-some common organization methods that are already row-based:
+If you prefer divs, just substitute them for the ul and li elements like
+so:
 
 ~~~
-<ul class="tel-tabular">
-  <li>
-    <label>First row, cell 1.</label>
-    <input>
-    <label>First row, cell 3.</label>
-    <input>
-  </li>
-  <li>
-    <label>Second row, cell 1.</label>
-    <input>
-    <label>Second row, cell 3.</label>
-    <input>
-  </li>
-</ul>
-~~~
-
-This is a little bit unlike regular list markup in that there is no
-content directly in the list items, there are only elements that turn
-into cells.  Most of the time I'm using this for form layout, so it
-works fine in that case as you can see.  If necessary for other kinds of
-content you can simply add any kind of element to delineate your cells,
-so if you have some paragraphs or cell content in an __li__, you can
-just add a __span__ or __p__ tag around the content.  This is still less
-markup than a regular __table__.
-
-You can also use plain old __div's__ and/or __span's__:
-
-~~~
-<div class="tel-tabular">
-  <div>
-    <span>First row, cell 1.</span>
-    <span>First row, cell 2.</span>
-  </div>
-  <div>
-    <span>Second row, cell 1.</span>
-    <span>Second row, cell 2.</span>
-  </div>
-</div>
-~~~
-
-There are varying opinions, but some people like the list (__ol__ or
-__ul__).  When you use a list as your basic markup, you have the
-advantage that when you don't have css, it still renders in a row
-format.  You also have good accessibility, as most screen readers have a
-little extra functionality around lists, such as telling you how many
-elements are in the list.
-
-So let's take a look at a real example:
-
-~~~
-<form class="tel-tabular">
-  <div>
-    <label>Label1 filler</label>
-    <input>
-    <label>Label2</label>
-    <input>
-  </div>
-  <div>
-    <label>Label3</label>
-    <input>
-    <label>Label4 filler</label>
-    <input>
+<form>
+  <div class="tel-tabular">
+    <div> <!-- each div under .tel-tabular is a table row -->
+      <label>Field 1:</label>
+      <input>
+      <label>Field 2:</label>
+      <input>
+    </div>
+    <div>
+      <label>Field 3:</label>
+      <input>
+      <label>Field 4:</label>
+      <input>
+    </div>
   </div>
 </form>
 ~~~
 
-I've chosen to use __div's__ rather than a list in this example so we
-can focus on the rendering and not the semantics of the underlying
-markup, but it works fine with the list markup as well, and __div__ is
-semantic enough by itself.
+In fact, you don't even need the enclosing div.  You can eliminate it
+and apply the tel-tabular class to the form itself.
 
-The form renders as this:
+You can use divs instead of uls for the rest of the examples in the same
+way, so I won't bother showing both methods.
 
-![basic form]
+Overflowed cells
+----------------
 
-Notice that the column widths are determined by the longest labels.
-When I don't have css, it renders as this:
+You can make an element that streches outside of its cell so that you
+can handle unusual situations that might normally break the flow of the
+table as a whole.
 
-![basic form no css]
-
-So you can see it's pretty close to the tabular layout, we just lose the
-column alignment.  So, pretty good, and _we've been able to use semantic
-markup that is meaningful on its own_.  The only thing we need to add to
-get the presentation we want is css and that's the whole point.
-
-So far, so good.  The layout looks good to the eye and we get the column
-width behavior we want as long as we conform to the markup structure.
-
-### Long Labels and Spanning
-
-However, what happens if we want to add an element that's really long
-and blows the layout for the rest of the cells?
-
-![form with long element]
-
-The simplest solution is to leave the cell alone and instead let the
-content overflow out of the cell.  As long as there's no additional
-fields, that works fine.  All you need to do is wrap the element in
-another one, like so:
+The markup:
 
 ~~~
-<div>
-  <span><label>LOOOOOOONNNNNNNNGGGGG</label><span>
-</div>
+<form>
+  <ul class="tel-tabular">
+    <li>
+      <label>Field 1:</label>
+      <input>
+      <label>Field 2:</label>
+      <input>
+    </li>
+    <li>
+      <span>
+        <span>
+          <input type="checkbox">
+          <label>A checkbox that has a long label</label>
+        </span>
+      </span>
+    </li>
+  </ul>
+</form>
 ~~~
 
-This makes the span get the __display: table-cell__ attribute from our
-css that was going on the label before.  Then the label gets its normal
-display type, which is __inline__.
+The structure is the same as you would expect for the first row from the
+first example.  The second row, however, holds a checkbox and label that
+will look too far spaced apart if they are put in separate cells, but
+won't fit inside a single cell either.
 
-That's not quite good enough, however, because the cell still adjusts to
-the width of its content, so we've just pushed the problem down another
-level.  There _is_ something we can do about that, though.  Since the
-label is no longer a table-cell, we can assign a width of 0 to it.  The
-cell around it will see it as no width and will shrink to match the rest
-of the column.
+This markup will put them in a single cell but allow them to overflow
+outside the cell without affecting the rest of the table.  Notice the
+two spans around the items that will extend outside of their cell.  They
+will allow the css to do the proper formatting.
 
-Since you can't assign a width to an inline element, you also have to
-change the display type of the span contents to __inline-block__.
+The css for it is in addition to the earlier css:
 
 ~~~
 .tel-tabular > * > * > * {
-  display: inline-block;
-  width: 0;
-}
-~~~
-
-With this, the form becomes:
-
-![form with long label fixed]
-
-So far, so good.  However, it's no use if it's just a label on its own,
-so let's make it a checkbox with a label after:
-
-~~~
-<div>
-  <span>
-    <input type="checkbox">
-    <label>This is a long label</label>
-  </span>
-</div>
-~~~
-
-![form with wrapping]
-
-Unfortunately, there's a problem.  The zero-width span is forcing the
-content to wrap, so we have to add this to the css:
-
-~~~
-tel-tabular > * > * > * {
   display: inline-block;
   width: 0;
   white-space: nowrap;
 }
 ~~~
 
-Which gives:
+Note that if you want to add further content to the same row, you will
+have to pad the row with blank cells until you reach one that doesn't
+overlap with the overflow.
 
-![form with missing checkbox]
-
-Better.  But where's the checkbox?  Remember at this point that we have
-a form with the __tel-tabular__ class with children including a __div__
-and a __span__ before we hit the __input__ (and sibling __label__).  The
-__div__ is the row and the __span__ is the cell but inside the cell we
-have multiple elements that are each getting __display: inline-block__
-as well as width 0.  So they're just piling up on top of one another.
-
-We need to break the assignment of inline-block and width 0 on these
-elements.  We could create a class to do so and assign it to each
-element, but it's easier to fix this particular issue with markup.
-Introducing another __span__ around the elements fixes the issue:
+You can do this with empty cells:
 
 ~~~
-<div>
+<li>
   <span>
     <span>
       <input type="checkbox">
-      <label>This is a long label</label>
+      <label>A checkbox that has a long label</label>
     </span>
   </span>
-</div>
+  <span>&nbsp;</span>
+  <span>&nbsp;</span>
+  <label>Some more content</label>
+</li>
 ~~~
 
-![form with checkbox]
+Short fields
+------------
 
-While css is usually preferable to change presentation style, the use of
-spans and divs is also commonplace and necessary in many cases to give
-css a place to attach or, sometimes, to change the structure so it no
-longer attaches to certain elements as I've done here.
+You might also want to put multiple fields in a cell where space
+permits.  The classic example of this is the state and zip fields in an
+address.
 
-The other reason I've chosen to use a span rather than additional css is
-simplicity.  Since there may be several elements that need to be in the
-line, it's simpler to introduce a single span enclosing them all rather
-than add a class to each and every potential item.
+We'll make the label for the state field be the first cell as usual.
+We'll then use the overflowed cell technique to place the state input as
+well as the zip label and input into the following cell.  In this case,
+we're not actually overflowing the cell but the technique works to
+prevent each individual content item from being assigned to its own
+cell.
 
-So now, even when you have one of these off rows that might normally
-blow the layout, you can have it and even continue your table afterward,
-with the columns lining up in a nice visually appealing manner:
+This time we'll only need css for defining our input widths, but we'll
+need new classes for that purpose.
 
-![form with continued table]
-
-### Packing Small Fields in a Cell
-
-Sometimes you've got fields that you don't want as wide as the rest.
-The classic example would be the state and zip fields of an address
-form.
-
-The state and zip fields are usually narrow enough to fit within a
-single field's-width.  In fact, you may even want to put other fields
-afterward in the same row.
-
-The simplest way to accommodate this is to make the first field's label
-(state, in this case) a regular cell and to make the following input as
-well as the label and input for zip into the following cell.  We can do
-this with the html/css as it stands by putting the input/label/input
-sequence into a span, where the span becomes the cell and the rest the
-contents of the cell:
+The additional css:
 
 ~~~
-<div>
-  <label>State</label>
-  <span>
-    <span>
-      <input class="tel-state">
-      <label>Zip</label>
-      <input class="tel-zip">
-    </span>
-  </span>
-</div>
+.tel-tabular .tel-state {
+  width: 2em;
+  margin-left: 0.2em;
+  margin-right: 0.3em;
+}
+
+.tel-tabular .tel-zip {
+  width: 5em;
+}
 ~~~
 
-### Accomodate Fieldsets
+Note that we'll also need some margins on the first input to get the
+second one to line up on the right edge of the column.  The rendering
+tends to be browser-specific, so choose which browser you want to
+optimize for and accept that it isn't going to be perfect on the others.
+Or figure out a better method than this one. :)
 
-Fieldsets are a convenient way of grouping related information,
-especially
+Also note that I've included the .tel-tabular qualifier on both
+selectors.  You wouldn't have to do this normally, but in this case I'm
+planning ahead to avoid conflicts with the css I'll be introducing in
+the next section.
 
-The table values for the display property actually make this very easy:
+The markup:
 
-[article on the various layout alternatives]: http://somacss.com/cols.html
-[a good article on `display: table`]: http://www.digital-web.com/articles/everything_you_know_about_CSS_Is_wrong/
-[rules for table generation are available from the W3C]: http://www.w3.org/TR/CSS21/tables.html#anonymous-boxes
-[basic form]: {{urls.media}}/simple-semantic-table-layout-for-non-table-markup/basic-form.png
-[basic form no css]: {{urls.media}}/simple-semantic-table-layout-for-non-table-markup/basic-form-no-css.png
-[form with long element]: {{urls.media}}/simple-semantic-table-layout-for-non-table-markup/form-with-long-label.png
-[form with long label fixed]: {{urls.media}}/simple-semantic-table-layout-for-non-table-markup/form-with-long-label-fixed.png
-[form with wrapping]: {{urls.media}}/simple-semantic-table-layout-for-non-table-markup/form-with-wrapping.png
-[form with missing checkbox]: {{urls.media}}/simple-semantic-table-layout-for-non-table-markup/form-with-missing-checkbox.png
-[form with checkbox]: {{urls.media}}/simple-semantic-table-layout-for-non-table-markup/form-with-checkbox.png
-[form with continued table]: {{urls.media}}/simple-semantic-table-layout-for-non-table-markup/form-with-continued-table.png
+~~~
+<form>
+  <ul class="tel-tabular">
+    <li>
+      <label>Field 1:</label>
+      <input>
+      <label>Field 2:</label>
+      <input>
+    </li>
+    <li>
+      <label>State:</label>
+      <span>
+        <span>
+          <input class="tel-state">
+          <label>Zip:</label>
+          <input class="tel-zip">
+        </span>
+      </span>
+    </li>
+  </ul>
+</form>
+~~~
+
+You can still put further fields on the same line by adding them to the
+same li.  You can pad out blank cells with the <span>&nbsp;</span>
+method as well.
+
+Fieldsets
+---------
+
+Unfortunately, if you put a real fieldset in the middle of the form, it
+divides the form into separate tables before and after the fieldset.  I
+couldn't find a way to keep this from happening, and it ruins the
+gestalt of the form.
+
+You can make separate tables look the same by assigning minimum widths,
+but then we're back to the inline-block method anyway, which I didn't
+want.  Instead, I'll fake a fieldset by mocking it up with a div.
+
+The markup:
+
+~~~
+<form>
+  <ul class="tel-tabular">
+    <li>
+      <label>Field 1:</label>
+      <input>
+      <label>Field 2:</label>
+      <input>
+    </li>
+    <li class="tel-fieldset">
+      <div class="tel-legend"><div>Legend text</div></div>
+      <div>
+        <label>Field 3 (with filler):</label>
+        <input>
+        <label>Field 4:</label>
+        <input>
+      </div>
+    </li>
+    <li>
+      <label>Field 5:</label>
+      <input>
+      <label>Field 6:</label>
+      <input>
+    </li>
+  </ul>
+</form>
+~~~
+
+Here the li gets the fieldset class.  It includes a legend div (with an
+embedded div to give the css what it needs).  The other div contains the
+rows for the fields.  We have to use divs for rows instead of lis at
+this point, but it still degrades nicely without css.  Without css, the
+legend visibly marks off the fields as being separate, and they are
+gathered under a single bullet.
+
+The additional css is a bit more complicated, partly because it has to
+support the capabilities of overflowed and short cells.  It also has to
+neutralize some properties that bleed onto it due to the use of *
+selectors in the earlier css, but it's pretty harmless and I wanted to
+allow you to choose between uls and divs as you see fit, so it's worth
+the bit of additional complexity.
+
+Here it is:
+
+~~~
+.tel-tabular > * {
+  display: table-row-group;
+}
+
+.tel-tabular {
+  border-collapse: collapse;
+}
+
+.tel-fieldset {
+  border: 1px solid;
+}
+
+.tel-fieldset > * {
+  display: table-row;
+  padding-right: 0;
+}
+
+.tel-fieldset > * > * {
+  display: table-cell;
+  white-space: inherit;
+  padding-right: 0.3em;
+  width: auto;
+}
+
+.tel-fieldset > * > * > * {
+  display: inline-block;
+  width: 0;
+  white-space: nowrap;
+}
+
+.tel-legend {
+  position: relative;
+  display: block;
+}
+
+.tel-legend > * {
+  position: absolute;
+  top: -0.74em;
+  left: 0.6em;
+  display: block;
+  background: white;
+  padding: 0 0.3em;
+  white-space: inherit;
+}
+
+label {
+  padding-bottom: 0.7em;
+  padding-top: 0.6em;
+}
+~~~
+
+Notice that we've changed the display of .tel-tabular > * from table-row
+to table-row-group.  This allows us to add a level of rows under the
+.tel-fieldset element that are still rows and still align with the
+columns.  In your css you can just use the table-row-group value in the
+first place.  I didn't only because I wanted to show the progression of
+the css as we added features.
+
+Also notice the padding added to the label.  This is so that the legend
+text doesn't cramp the lines above and below it.  This is the easy way
+out since I'm adding that padding to every line, not just the ones
+before and after the legend.  If someone can figure out an elegant way
+to just pad the legend, I think that would be better.
+
+Caveats
+-------
+
+While automatic table layout is great, it does come with it's own set of
+rules.  So far, the only caveat I have run into is that setting height
+of 100% doesn't work on table cells.  Explicit heights in px or ems
+seems to work fine, so I'm not sure if it's just percentages or 100% in
+particular.
+
+The mock fieldset legend has one caveat, which is that its bacground
+color must be explicitly set to match the background color of the rest
+of your layout.  It's background can't be set to be tranparent, since
+it is necessary to mask the fieldset border around the legend.
+
+If you are used to using nested lists to define fieldset-like areas in
+your forms, you will have to use divs nested inside the lists instead.
+The structure of the css requires it, and I can't see a way to allow
+nested lists without breaking the table flow.
+
+The last caveat is that you'll need to tweak the css to match
+the feel of your design through the use of color, fonts, padding, etc.
+You may also have to tweak the padding on labels to ensure that the
+legend on fieldsets isn't overlapping the rows before and after.  Since
+this is likely to result in slight variations between browsers, choose
+which browser you want to target and develop for that one first.
+
+Don't forget to test your results on the browsers you care about.
+
+Bonuses
+-------
+
+Because these are real tables, you get vertical alignment for free,
+which is not true of other layout methods.  I don't use it in forms but
+I do use it when I do page layouts, for example.
+
+Conclusion
+----------
+
+That's how to achieve table-based layouts with forms.  Tables have the
+advantage of automatically accomodating the width of their content,
+which makes them ideal for laying out forms where the content width is
+not necessarily known beforehand.
+
+You can choose between div-based layout and list-based layout.  The
+layout degrades gracefully without css, so the form is still usable in
+that case and friendly to assistive technologies.
+
+You can designate some cells to be short or long without affecting the
+width of their column through a combination of css and markup.  The rest
+of the table before and after keep their flow and still look like a
+unified table.
+
+The same is true of fieldsets through the use of our mock fieldsets done
+in css.  While you can't use real fieldsets without breaking the flow of
+the table before and after, you can use the mock fieldset and it looks
+close to the same.
+
+That's it.  Please drop me a comment if you find this useful!
+
+[this gist]: https://gist.github.com/binaryphile/5321689
 
