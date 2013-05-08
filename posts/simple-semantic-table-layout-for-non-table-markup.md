@@ -441,7 +441,7 @@ Here it is:
   display: block;
   background: white;
   padding: 0 0.3em;
-  white-space: inherit;
+  white-space: nowrap;
 }
 
 label {
@@ -453,9 +453,9 @@ label {
 Notice that we've changed the display of .tel-tabular > * from table-row
 to table-row-group.  This allows us to add a level of rows under the
 .tel-fieldset element that are still rows and still align with the
-columns.  In your css you can just use the table-row-group value in the
-first place.  I didn't only because I wanted to show the progression of
-the css as we added features.
+columns.  In the css in [this gist] I just use the table-row-group value
+in the first place.  For this article I just wanted to show the
+progression of the css as we added features.
 
 Also notice the padding added to the label.  This is so that the legend
 text doesn't cramp the lines above and below it.  This is the easy way
@@ -463,19 +463,22 @@ out since I'm adding that padding to every line, not just the ones
 before and after the legend.  If someone can figure out an elegant way
 to just pad the legend, I think that would be better.
 
-Caveats
--------
+Another potential gotcha is the legend background.  It has to be set to
+a color to mask the fieldset border, so choose one that matches your
+page background.  It can't be transparent because the border will show.
+
+Finally, the fieldset border will have a gap if there is no cell in the
+final column of your row.  Stub out all fieldset rows with blank
+<span>&nbsp;</span> cells.
+
+Other Caveats
+-------------
 
 While automatic table layout is great, it does come with it's own set of
 rules.  So far, the only caveat I have run into is that setting height
 of 100% doesn't work on table cells.  Explicit heights in px or ems
 seems to work fine, so I'm not sure if it's just percentages or 100% in
 particular.
-
-The mock fieldset legend has one caveat, which is that its bacground
-color must be explicitly set to match the background color of the rest
-of your layout.  It's background can't be set to be tranparent, since
-it is necessary to mask the fieldset border around the legend.
 
 If you are used to using nested lists to define fieldset-like areas in
 your forms, you will have to use divs nested inside the lists instead.
