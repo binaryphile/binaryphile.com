@@ -15,7 +15,9 @@ columnal format that degrades gracefully without css by the use of css
 How to get it
 -------------
 
-See [this gist].
+See [this gist].  You can see it in action at [this jsFiddle], but the
+gist is better for downloading since it always gives you the latest
+version while the same is not true of the jsFiddle.
 
 How to use it
 -------------
@@ -457,33 +459,56 @@ columns.  In the css in [this gist] I just use the table-row-group value
 in the first place.  For this article I just wanted to show the
 progression of the css as we added features.
 
-Also notice the padding added to the label.  This is so that the legend
+Also notice the padding added to the label element.  This is so that the legend
 text doesn't cramp the lines above and below it.  This is the easy way
 out since I'm adding that padding to every line, not just the ones
 before and after the legend.  If someone can figure out an elegant way
-to just pad the legend, I think that would be better.
+to just pad the legend, I think that would be better.  Another (ugly)
+method is to add a row of empty cells before and after the fieldset with
+a div full of of nbsp spans.  You'll probably want to add some around the
+ending div tag of the fieldset as well.  It looks nice when rendered,
+but not very good practice for html.
 
-Another potential gotcha is the legend background.  It has to be set to
-a color to mask the fieldset border, so choose one that matches your
-page background.  It can't be transparent because the border will show.
+The legend has a background which has to be set in order to a color to
+mask the fieldset border, so choose one that matches your page
+background.  It can't be transparent because the border will show.
 
-Finally, the fieldset border will have a gap if there is no cell in the
+There _are_ some gotchas with these mock fieldsets which I've
+encountered in practice.  
+
+The fieldset border will have a gap if there is no cell in the
 final column of your row.  Stub out all fieldset rows with blank
-<span>&nbsp;</span> cells.
+<span>&nbsp;</span> cells to fix this.
+
+The top of the fieldset border also requires that the table-row-group
+_before_ it has all of the cells in a row.  That means that if it's the
+first thing in the form, you have to put in a dummy div before it which
+contains the right number of nbsp spans.
 
 Other Caveats
 -------------
 
 While automatic table layout is great, it does come with it's own set of
-rules.  So far, the only caveat I have run into is that setting height
-of 100% doesn't work on table cells.  Explicit heights in px or ems
-seems to work fine, so I'm not sure if it's just percentages or 100% in
-particular.
+rules.  The biggest issue I've run into is that you can't set margin
+on most table elements, including rows and the table itself.  Some items
+with display: table-cell will let you set margin though, such as the
+labels.  This can be a big drawback of this method.
+
+The other table-related caveat is that setting height of 100% doesn't
+work on table cells.  Explicit heights in px or ems seems to work fine,
+but I'm not sure if it's just percentages or 100% in particular.
 
 If you are used to using nested lists to define fieldset-like areas in
 your forms, you will have to use divs nested inside the lists instead.
 The structure of the css requires it, and I can't see a way to allow
 nested lists without breaking the table flow.
+
+Because overflowed cells are width 0, trying to use one on the right
+side of a fieldset will cause it to overflow the border, so you don't
+want to do this.  Keep overflowed cells on the left side of your table
+where they will have space from following columns to rely on.  Short
+fields which are attached to the widest field in the rightmost column
+will similarly overflow the fieldset.
 
 The last caveat is that you'll need to tweak the css to match
 the feel of your design through the use of color, fonts, padding, etc.
@@ -526,4 +551,5 @@ close to the same.
 That's it.  Please drop me a comment if you find this useful!
 
 [this gist]: https://gist.github.com/binaryphile/5321689
+[this jsFiddle]: http://jsfiddle.net/sqDLz/9/
 

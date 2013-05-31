@@ -201,7 +201,7 @@ Install the required chef recipes
     - `git clone git://github.com/opscode-cookbooks/build-essential.git`
     - `git clone git://github.com/opscode-cookbooks/git.git`
     - `git clone git://github.com/opscode-cookbooks/mysql.git`
-    - `git clone git://github.com/lilleyt/chef-ohmyzsh.git ohmyzsh`
+    - `git clone git://github.com/binaryphile/chef-ohmyzsh.git ohmyzsh`
     - `git clone git://github.com/opscode-cookbooks/openssl.git`
     - `git clone git://github.com/fnichol/chef-rvm.git rvm`
     - `git clone git://github.com/coroutine/chef-system_packages.git
