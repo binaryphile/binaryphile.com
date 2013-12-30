@@ -26,6 +26,7 @@ YouTube
 - [Audiobook of Original Satoshi Nakamoto Whitepaper](http://www.youtube.com/watch?v=1yYrYCE4i1c)
 - [How the Bitcoin Protocol Actually Works](http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/)
 - [Graphic of How a Bitcoin Transaction Works](http://i.imgur.com/Qy57QxM.jpg)
+- [The Truth About Bitcoin](https://www.youtube.com/watch?v=w4HGVJjqDVk) - Good info, albeit from a particular political viewpoint.  Not for everyone.
 
 ### Bitcoin Security
 
