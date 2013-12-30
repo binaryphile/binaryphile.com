@@ -1,0 +1,16 @@
+title : Binaryphile
+tagline: Bits and Bytes
+author :
+  name : Ted Lilley
+  email : ted.lilley@gmail.com
+  github : lilleyt
+  twitter : lilleyt
+  feedburner : feedname
+
+navigation :
+  - index.md
+
+rss:
+  title: Binaryphile RSS Feed
+  href: http://www.binaryphile.com/rss.html
+
