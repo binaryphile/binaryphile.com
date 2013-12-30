@@ -8,7 +8,9 @@ author :
   feedburner : feedname
 
 navigation :
-  - index.md
+  - archive
+  - categories
+  - about
 
 rss:
   title: Binaryphile RSS Feed
