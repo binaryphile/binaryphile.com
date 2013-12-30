@@ -5,7 +5,6 @@ description:
 categories:
   - spree
   - vagrant
-tags: []
 ---
 
 These are my personal notes on how to get my Spree instance running

@@ -3,7 +3,6 @@ title: Coopting Artisteer's button design to make your own Artisteer-like button
 date: '2013-01-10'
 description:
 categories: artisteer
-tags: []
 ---
 
 Note: I've created a [new post] detailing how the new buttons work in
@@ -74,7 +73,7 @@ want control over, such as the background graphic and font properties?
 
 Artisteer basically uses a background-sprite approach to making buttons.
 The button text is just the link text rendered in its own style, over a
-button image that Artisteer generates whenever you export to html.  
+button image that Artisteer generates whenever you export to html.
 
 ### The html
 
@@ -386,7 +385,7 @@ connected.
 : - Once they are close, select the space between them exactly (again,
 full-height), then use the move selection tool to place the
 selection over a section of button.  Copy/paste and it will be the
-perfect size to fill the gap, leaving you with no overlaps. 
+perfect size to fill the gap, leaving you with no overlaps.
 
 : ![finished button]
 

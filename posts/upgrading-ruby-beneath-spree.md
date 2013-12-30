@@ -5,7 +5,6 @@ description:
 categories:
   - spree
   - ruby
-tags: []
 ---
 Ruby can be tricky to upgrade. When I went from ruby-1.9.3-p192 to
 ruby-1.9.3-p327, my development Spree store stopped working because of

@@ -3,7 +3,6 @@ title:
 date: '2013-01-24'
 description:
 categories: spree
-tags: []
 ---
 [Spree Commerce] is an open-source e-commerce solution written in [Ruby
 on Rails].
@@ -234,7 +233,7 @@ and copy all of the gem versions to your existing instance's Gemfile.
 - `git init`
 - `git add .`
 - `git commit -m "Initial commit"`
-- `spree install` 
+- `spree install`
     - Install default gateways: yes
     - Install default authentication: yes
     - Run migrations: yes
