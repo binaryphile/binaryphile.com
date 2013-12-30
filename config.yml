@@ -71,19 +71,19 @@ asset_pipeline:
 
 widgets :
 
-  analytics :
-    use : google
-    # -- config for google --
-    tracking_id : 'UA-123-12'
+  # analytics :
+  #   use : google
+  #   # -- config for google --
+  #   tracking_id : 'UA-123-12'
 
-    # -- config for getclicky  --
-    # site_id :
+  #   # -- config for getclicky  --
+  #   # site_id :
 
   comments :
     use : disqus
     enable : true
     # -- config for disqus --
-    short_name : jekyllbootstrap # Change This!
+    short_name : binaryphile # Change This!
 
     # -- config for livefyre --
     # site_id : 123
