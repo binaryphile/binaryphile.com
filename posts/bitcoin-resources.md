@@ -95,6 +95,7 @@ to help you buy bitcoin if you use some of the services below.
 - [coinbase](https://coinbase.com/) - purchase bitcoin from your bank account. seems to be suffering growth issues at the moment, see <http://www.reddit.com/r/coinbase/>
 - [LocalBitcoins](https://localbitcoins.com/) - purchase bitcoin for cash/bank transfer/wire transfer from people in your area
 - [purse.io](http://purse.io/) - earn bitcoin by purchasing retail items for others with dollars
+- [cash into coins](https://cashintocoins.com/) - deposit cash for bitcoin
 
 ### Ways to Spend Bitcoin
 
