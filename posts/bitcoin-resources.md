@@ -58,6 +58,7 @@ Further down the rabbit hole.  Take the red pill, Neo.
 - [How the Bitcoin Protocol Actually Works](http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/)
 - [How Bitcoin Works Under the Hood](http://www.imponderablethings.com/2013/07/how-bitcoin-works-under-hood.html)
 - [The Truth About Bitcoin](https://www.youtube.com/watch?v=w4HGVJjqDVk) - Good info, albeit from a particular political viewpoint.  Not for everyone.
+- [Bitcoin History](http://historyofbitcoin.org/)
 - [Graphic of How a Bitcoin Transaction Works](http://i.imgur.com/Qy57QxM.jpg)
 - [Audiobook of Original Satoshi Nakamoto Whitepaper](http://www.youtube.com/watch?v=1yYrYCE4i1c)
 
@@ -81,6 +82,7 @@ A warm, cozy home for your bitcoin.
 - [Official bitcoin-qt client](http://bitcoin.org/en/download) - heavy wallet, Win/Mac/Linux
 - [Electrum](https://electrum.org/) - another light wallet, Win/Mac/Linux/Android
 - [Bitcoin Wiki Information on Paper Wallets](https://en.bitcoin.it/wiki/Paper_wallet)
+- [CoinKite](https://coinkite.com/) - online Bitcoin bank
 
 ### Ways to Buy Bitcoin
 
@@ -118,6 +120,7 @@ Services which help your business accept bitcoin and convert to dollars.
 - [BitInfoCharts](http://bitinfocharts.com/) - market statistics for many cryptocurrencies
 - [Crypto-Currency Market Capitalizations](http://coinmarketcap.com/)
 - [bitcoinpulse](http://www.bitcoinpulse.com/) - bitcoin adoption metrics
+- [fiatleak](http://fiatleak.com/) - watch dollar value transactions of bitcoin
 
 ### Bitcoin Exchanges
 
@@ -167,9 +170,10 @@ they have to do your taxes.
 - [reddit's /r/bitcoin](http://www.reddit.com/r/bitcoin)
 - [bitcoin on StackExchange](http://bitcoin.stackexchange.com/)
 
-### Potential Problems with Bitcoin
+### Bitcoin Weaknesses
 
 - [51% Attack](https://en.bitcoin.it/wiki/Weaknesses#Attacker_has_a_lot_of_computing_power)
+- [Tragedy of the Commons](https://en.bitcoin.it/wiki/Tragedy_of_the_Commons)
 - [Selfish Mining Attack](http://motherboard.vice.com/blog/bitcoin-isnt-broken-despite-a-potential-flaw)
 - [Sybil Attack](https://bitcointalk.org/index.php?topic=4335.0)
 - [Bitcoin Wiki Weaknesses Page](https://en.bitcoin.it/wiki/Weaknesses)
