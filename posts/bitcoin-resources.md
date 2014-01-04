@@ -34,9 +34,12 @@ Bitcoin with a little b refers to the unit of currency which gets paid
 over the Bitcoin network.  You own and pay with bitcoin.  You use the
 Bitcoin network and providers typically supply Bitcoin services.
 
-Plural or singular?  You can refer to it as either bitcoins or bitcoin,
-even when you're talking about sums greater than 2 bitcoin.  It's up to
-you.  I prefer the singular.
+Plural or singular?  Nothing says newb to me like hearing "bitcoins".
+That's just me though.  While the community seems to prefer using the
+singular all the time, you do hear people talk about "bitcoins"
+periodically, especially when they are talking to someone who doesn't
+know anything about the subject.  Don't feel bad about calling them
+bitcoins if you want though, it's up to you.  I prefer the singular.
 
 Generally I list things here in the order which I recommend them, but
 investigate your options and decide for yourself which suit you.
@@ -157,6 +160,7 @@ heads up so they have time to read and understand about Bitcoin before
 they have to do your taxes.
 
 - [Bitcoin Magazine series on taxes](http://bitcoinmagazine.com/author/jason-tyra/) - find the three articles in the author's list
+- [Great Reddit thread on taxes](http://www.reddit.com/r/Bitcoin/comments/1uccfz/i_am_a_tax_attorney_here_are_my_answers_to_the/)
 
 ### Bitcoin Organizations
 
