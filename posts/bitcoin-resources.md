@@ -161,6 +161,12 @@ they have to do your taxes.
 
 - [Bitcoin Magazine series on taxes](http://bitcoinmagazine.com/author/jason-tyra/) - find the three articles in the author's list
 - [Great Reddit thread on taxes](http://www.reddit.com/r/Bitcoin/comments/1uccfz/i_am_a_tax_attorney_here_are_my_answers_to_the/)
+- [KryptoTax](http://kryptotax.com/) - offers a calculator of gains for various exchange output formats
+- [KryptoTax review](http://bitcoinmagazine.com/9355/kryptotax-review/) - review of the site by Bitcoin Magazine
+
+### Bitcoin Regulation
+
+- [Legal Status of Bitcoin Around the World](http://www.bitlegal.net/index.html)
 
 ### Bitcoin Organizations
 
