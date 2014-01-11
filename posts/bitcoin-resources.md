@@ -205,5 +205,9 @@ they have to do your taxes.
 - [@aantonop](https://twitter.com/aantonop) - Andreas Antonopoulos
 - [@Cryptocoin_News](https://twitter.com/Cryptocoin_News) - Justin Case
 
+### Bitcoin-branded Merchandise
+
+- [Bitcoin QR Code T-Shirt](https://bitcoinshirts.co/)
+
 Enjoy and raise awareness for Bitcoin!
 
