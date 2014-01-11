@@ -108,6 +108,10 @@ to help you buy bitcoin if you use some of the services below.
 - [purse.io](http://purse.io/) - purchase retail items through people willing to make the purchase for you in dollars in exchange for bitcoin
 - [coinmap.org](http://coinmap.org/) - map of local businesses accepting bitcoin
 
+##### Bitcoin-branded Merchandise
+
+- [Bitcoin QR Code T-Shirt](https://bitcoinshirts.co/)
+
 ### Bitcoin Merchant Services
 
 Services which help your business accept bitcoin and convert to dollars.
@@ -204,10 +208,6 @@ they have to do your taxes.
 - [@LetsTalkBitcoin](https://twitter.com/LetsTalkBitcoin)
 - [@aantonop](https://twitter.com/aantonop) - Andreas Antonopoulos
 - [@Cryptocoin_News](https://twitter.com/Cryptocoin_News) - Justin Case
-
-### Bitcoin-branded Merchandise
-
-- [Bitcoin QR Code T-Shirt](https://bitcoinshirts.co/)
 
 Enjoy and raise awareness for Bitcoin!
 
