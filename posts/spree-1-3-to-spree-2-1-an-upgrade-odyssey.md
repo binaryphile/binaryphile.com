@@ -35,41 +35,8 @@ So this will be a long one.  Don't worry though, if you work seriously
 with spree, it may save you boatloads of time as it has for me.
 
 I've been working with Spree Commerce since version 0.60, about three
-years by now if I'm estimating correctly.
-
-It's been a love-dislike relationship.  I don't hate Spree, quite the
-contrary.  I've watched it evolve rapidly from release to release and
-the developers are top-notch as well as the active community.  I think
-the fact is simply that upgrading sophisticated database-backed projects
-(as many Rails apps are) is just fraught with the potential for
-mistakes.
-
-Not only that, they aren't necessarily all your mistakes either.  This
-is software development on-the-fly and new bugs are being squashed (as
-well as introduced) all of the time.  You hope that the rate of the
-former is greater than that of the latter and by my experience, such is
-the case.  But there are always a few interesting ones in there to bite
-you and they always seem to pop their heads up when it's major upgrade
-time.
-
-There's a third source of errors with projects like Spree as well.
-The Spree team is dedicated to a simple, extensible core and that's
-what you get.  Unfortunately, for a *lot* of use cases, you need to load
-extensions and that introduces its own hairiness factor.  Not only do
-you need to make sure that your plugins are ready to upgrade when you
-are and support the target version of Spree, you also have to worry
-about unintended interactions with the upgrade process as well as each
-plugin with the others.
-
-Don't let my pessimism get you down though.  There's plenty to be
-optimistic about.  Rails, when its principles are applied well, makes it
-enormously easier to upgrade an application than anything you could have
-homespun yourself.  And the Spree team could write the book on Rails
-principles (in fact, some of them have written books on it).  As far as
-I can tell, the Rails tooling is second to none and that's saying a lot.
-Bundler, git, rake and migrations handle most of the heavy lifting,
-allowing you to focus on making sure everything came out right in the
-end.  And for that I'm grateful.
+years by now if I'm estimating correctly.  If there's anything that's
+hard about Spree (and Rails in general), it's upgrades.
 
 So how do you go about tackling such a task?  Let me tell you about my
 situation.
@@ -100,10 +67,10 @@ easier to upgrade.  I've learned that many plugins get upgraded on their
 own timetable, if at all.  If you want to stay up with the state of the
 art, you'll stay away from frivolous plugins and only use what you need.
 
-I use the basic Spree theme, which is quite attractive.  There's a
-Spree-fancy theme as well which I haven't tried but is popular too.  I
+I use the basic spree theme, which is quite attractive.  There's a
+spree-fancy theme as well which I haven't tried but is popular too.  I
 make a bunch of small modifications to the theme, things like changing
-the logo, removing the Spree tag in the footer and adding our
+the logo, removing the spree tag in the footer and adding our
 Authorize.net seal to the checkout.  All of these are basic
 modifications perfectly suited for using Deface overrides.
 
@@ -156,7 +123,7 @@ it's over-specced at a couple gigs of RAM and four processors.  YMMV.
 I use the Spree Deployment Service to configure the production box.  The
 deployment service is awesome and very nearly turn-key.  I've found a
 few items I've had to tweak for my environment, but I can't recommend
-this tool enough.  It doesn't seem to get its due credit in the Spree
+this tool enough.  It doesn't seem to get its due credit in the spree
 community.
 
 Production runs on Ubuntu 12.04 LTS, which is the only platform
@@ -189,7 +156,7 @@ makes deployment exquisitely more manageable and you shouldn't miss it.
 
 In development, I clone and run my store code directly on my system.  I
 won't go into the setup of the requirements, which is amply covered in
-the Spree Getting Started guide.  You should be able to get an idea of
+the spree Getting Started guide.  You should be able to get an idea of
 most of it from this post anyway though.
 
 # The Development Cycle
@@ -197,7 +164,7 @@ most of it from this post anyway though.
 My normal development cycle is to work on code using sample data on my
 development machine.  I can even develop adequately on my Chromebook
 this way, using the crouton sideloader for an Ubuntu environment.  Once
-I've gotten everything working with Spree's sample data, I switch the
+I've gotten everything working with spree's sample data, I switch the
 database over to a copy of my production data and test that everything
 works there as well.  This allows me to separate data and
 migration-related issues into a separate step, one where I know that the
@@ -239,17 +206,17 @@ like this, but what you get in the end is a _known quantity_.
 
 Why do I imply that the regular process gives you an unknown?  Because
 what you get isn't the same as what someone else gets and especially
-isn't the same as what a new Spree store gets.  If you follow the
-directions (which now seem to be regularly provided with Spree upgrades
+isn't the same as what a new spree store gets.  If you follow the
+directions (which now seem to be regularly provided with spree upgrades
 in guide format, hooray!), you'll very likely get a working store
 after maybe dealing with a few hiccups.  Definitely in fewer steps than
 I'll outline here.
 
-What you won't get is the same thing that a brand new Spree user does.
+What you won't get is the same thing that a brand new spree user does.
 Your project will be different.  It will be generated from the Rails
 templates supplied when you initially created the store in the way-back.
 Those files don't stand still with each new Rails release, sometimes
-changing significantly.  But what the Spree guides don't (and shouldn't)
+changing significantly.  But what the spree guides don't (and shouldn't)
 do is take you through every possible upgrade path for the underlying
 Rails files.  There would just be too many possiblilities.  Instead,
 they tell you the changes which have to be made or else the store
@@ -259,7 +226,7 @@ Call me a control freak, but there's a reason for my madness.  By going
 through the effort of bringing the store completely up-to-date, more
 up-to-date than the guide process, I'm moving myself from one class of
 user to another.  I'm staying with the majority of future users.  I can
-count on the fact that in the future, the Spree community will be
+count on the fact that in the future, the spree community will be
 growing and that there will be more users who've created a store on the
 newer version than the old version with which I started.  By keeping my
 store in line with what the new users have, I'm keeping my store more
@@ -277,7 +244,7 @@ one of these work as advertised (I always get migration issues), I
 wouldn't blame you for skipping my process and going that route.  More
 power to you.
 
-My process involves creating a new Spree store, migrating the data and
+My process involves creating a new spree store, migrating the data and
 then exporting/importing it into the new store.  That way everything is
 spanking new.  The rub is that the data may need some massaging,
 especially if you're ditching plugins along the way, but what
@@ -295,7 +262,7 @@ store and go through the whole process, minus whatever of mine you want
 to skip.
 
 First thing we'll need is an "old" store.  I'll set one up without any
-plugins, just Spree 1.3.  I assume you have Ruby 1.9 or 2.0 installed.
+plugins, just spree 1.3.  I assume you have Ruby 1.9 or 2.0 installed.
 This is on my regular development machine running Ubuntu 13.10:
 
 ~~~
@@ -350,9 +317,9 @@ bundle install --without production test
 bundle exec spree install --auto-accept
 ~~~
 
-Once that finishes, you'll have a working Spree development environment
+Once that finishes, you'll have a working spree development environment
 running on sqlite.  SQLite is good enough for our purposes here.  For
-MySQL, you'll have to follow the directions in the Spree guides.
+MySQL, you'll have to follow the directions in the spree guides.
 
 You can test the store by running `bundle exec rails s` and then
 pointing your browser at <http://localhost:3000/> once it has started up.
@@ -567,7 +534,7 @@ sudo -s
 This will give you a root login session, which is what the deployment
 service needs.
 
-Now go back to the Spree site and refresh the page.  At this point you
+Now go back to the spree site and refresh the page.  At this point you
 should see an _Initialize Configuration_ command under your Server
 section.  Cut and paste this command into the vagrant box, then go get a
 cup of coffee/tea/etc.  Scratch that, go get a meal.  This is going to
@@ -598,7 +565,7 @@ ssh server.
 
 </div>
 
-When the install is finished (errors and all), go back to the Spree site
+When the install is finished (errors and all), go back to the spree site
 and visit the deployment page for your store.  There will now be a new
 command available under _Update Configuration_.  Copy and paste it into
 the vagrant box, replacing the password with what you'd like the
@@ -755,7 +722,7 @@ then copy and paste into each file, generating a separate secret for
 each file.
 
 Also note that the "secret_token" is being deprecated in favor of
-"secret_key_base" in Rails 4 (which Spree 2.1 is based on), but
+"secret_key_base" in Rails 4 (which spree 2.1 is based on), but
 secret_token still works.  I'll be using secret_token exclusively in
 this post since it's backwards compatible and these vagrant boxes don't
 need production security.
