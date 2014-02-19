@@ -662,7 +662,7 @@ and rename it "staging", then save and exit.
 
 ~~~
 cd /data/spree/shared
-mkdir spree (todo: necessary?)
+mkdir spree
 cd config
 vim secret_token.rb
 ~~~
