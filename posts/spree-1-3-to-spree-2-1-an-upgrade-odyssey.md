@@ -749,8 +749,7 @@ Save and exit.
 # The Vagrant Package
 
 Since this vagrant box will more often be used for staging than for
-production, we'll make another more change before packaging it up for
-reuse.
+production, we'll make another change before packaging it up for reuse.
 
 Edit these two files and change "production" to "staging".
 
