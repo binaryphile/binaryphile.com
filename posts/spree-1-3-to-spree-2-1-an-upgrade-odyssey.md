@@ -1507,7 +1507,7 @@ vagrant ssh #this will connect to staging, the primary machine
 sudo hostname staging-1-3
 ~~~
 
-Use sudo vim to change "store" to "staging-1-3" in these two files:
+Use `sudo vim` to change "store" to "staging-1-3" in these two files:
 
 - `/etc/hosts`
 - `/etc/hostname`
@@ -2269,8 +2269,13 @@ that setup, but it's handy in this case.
 machine _after_ you've closed off the old store from the outside.
 You'll need the uploads just as much as the data.
 
-4. Have fun with it.  Just kidding, this process sucks my soul, but what
-can you do?
+4. Have fun with it.  Just kidding, this process is undoubtedly tough,
+but what can you do?  Follow this post!  It makes it easier, I swear. :)
+
+Also, if you use the vagrant box for staging which I've outlined here,
+don't forget to set the application name to match yours in the box's
+`/data/spree/shared/config/secret_token.rb` file, and to use actual
+secrets rather than my slugs.
 
 # Coda
 
