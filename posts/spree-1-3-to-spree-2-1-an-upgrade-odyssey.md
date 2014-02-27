@@ -1482,7 +1482,7 @@ master branch, which pushes to production:
 git commit -m "some staging work"
 git push
 git checkout master
-git merge staging
+git merge --no-ff staging
 git push
 git checkout staging
 ~~~
