@@ -6,15 +6,26 @@ categories: spree
 tags: [upgrades, staging, rails, masochism]
 ---
 
+Note: a few days after I published this post, the spree team launched a
+new website.  For the moment you have to visit a specific url to get to
+the spree deployment service: <http://spreecommerce.com/stores>.
+Clicking on a store name takes you to a page where you can select the
+deployment service under the _Add Ons_ heading, and from there follow my
+instructions in this post.
+
+I've also noticed that the team has published an [ansible configuration]
+guide.  You may prefer to use that if you like ansible, or like having
+more direct control.  There's a [manual configuration] guide as well.
+
 # Prereqs
 
 Before I get started, if you want to follow along with this post, you'll
 need to install the following:
 
-- Virtualbox
-- Vagrant
-- Ruby (preferably 2.0)
-- git
+- [virtualbox]
+- [vagrant]
+- [ruby] (preferably 2.0)
+- [git]
 
 If you haven't worked with git before, you'll need to do some basic
 configuration.  It will give you directions the first time you try to
@@ -44,23 +55,10 @@ situation.
 # My Store
 
 I run a simple, low-volume store.  In fact, you can take a look at it at
-<http://store.diditbetter.com>.  As far as I can tell, I'm one of the
-very few who actually makes the source code for his Spree application
-available to the public.  In one way, this makes me generous to a fault;
-if there are security issues in my code, anyone can see them.  However,
-it also makes me more thorough in my attention to security than I
-sometimes see even the Spree team themselves being.  I think the
-practice among Spree implementers of security through obscurity makes
-for lax internal practices.  It's also one reason why, in my opinion,
-the Spree team has been able to get away with subpar security
-documentation, documentation which mostly points you to the Rails'
-security documentation, which is itself poorly written (again, my
-opinion).
-
-You can see the code for my current store at
+<http://store.diditbetter.com>.  You can see the code for my store at
 <https://github.com/binaryphile/spree-dibs-2.1>.  There's a good readme
-which goes into some detail on what's in the my store, but I'll go over
-the basics here as well.
+which goes into some detail on what's in there, but I'll go over the
+basics here as well.
 
 My store tries to stay as vanilla as possible, precisely to make it
 easier to upgrade.  I've learned that many plugins get upgraded on their
@@ -230,11 +228,11 @@ count on the fact that in the future, the spree community will be
 growing and that there will be more users who've created a store on the
 newer version than the old version with which I started.  By keeping my
 store in line with what the new users have, I'm keeping my store more
-supportable by being in the mainstream of users.  I'm less likely to
-experience oddball errors due to crufty configurations long abandoned by
-the Rails team.  I'm willing to go through the effort to keep myself
-positioned for future support and to avoid the compounding of cruft upon
-cruft that comes from a normal upgrade.
+supportable by being in the mainstream.  I'm less likely to experience
+oddball errors due to crufty configurations long abandoned by the Rails
+team.  I'm willing to go through the effort to keep myself positioned
+for future support and to avoid the compounding of cruft upon cruft that
+comes from a normal upgrade.
 
 The regular upgrade process typically involves updating your Gemfile to
 the latest versions in the appropriate places, then bundling and finally
@@ -253,16 +251,12 @@ to be.
 
 # The App and the Repository
 
-Let's start setting up the process.  I'm going to be using my particular
-store as the model, so it's going to have some specifics which may not
-affect you.
-
-I'll do it in a way where you can follow along with your own sample
-store and go through the whole process, minus whatever of mine you want
-to skip.
+Let's start setting up the process.  I'll do it in a way where you can
+follow along with your own sample store and go through the whole
+process, minus whatever of mine you want to skip.
 
 First thing we'll need is an "old" store.  I'll set one up without any
-plugins, just spree 1.3.  I assume you have Ruby 1.9 or 2.0 installed.
+plugins, just spree 1.3.  I assume you have ruby 1.9 or 2.0 installed.
 This is on my regular development machine running Ubuntu 13.10:
 
 ~~~
@@ -277,7 +271,7 @@ cd store-1-3
 vim Gemfile
 ~~~
 
-Modify the sqlite3 gem and add the mysql2 gem:
+Modify the sqlite3 gem and add the mysql2 gem (or see [1.3 Gemfile gist]):
 
 ~~~
 gem 'mysql2', :groups => :production
@@ -313,13 +307,14 @@ gem 'spree_auth_devise', :github => 'spree/spree_auth_devise', :branch => '1-3-s
 Exit and run:
 
 ~~~
-bundle install --without production test
+bundle install --without production test #this will throw an error
+bundle update #this will fix the error
 bundle exec spree install --auto-accept
 ~~~
 
 Once that finishes, you'll have a working spree development environment
 running on sqlite.  SQLite is good enough for our purposes here.  For
-MySQL, you'll have to follow the directions in the spree guides.
+MySQL, you'll have to follow the directions in the [spree guides].
 
 You can test the store by running `bundle exec rails s` and then
 pointing your browser at <http://localhost:3000/> once it has started up.
@@ -338,8 +333,8 @@ file.  When in doubt, this is almost always the safe choice.
 - `bundle update [gem]` - update a single gem and its dependencies to
 the latest acceptable version, not updating other gems unless required
 - `bundle update` - update all gems to the latest acceptable version. Be
-careful with this command.  You can always revert Gemfile.lock and
-`bundle install` to undo this.
+careful with this command, it tends to break things.  You can always
+revert Gemfile.lock and `bundle install` to undo this.
 - `bundle exec [command]` - run the command using the Gemfile's gems as
 the environment
 
@@ -354,7 +349,7 @@ git init
 vim .gitignore
 ~~~
 
-Add the following lines to your `.gitignore`:
+Add the following lines to your `.gitignore` (or see [.gitignore gist]):
 
 ~~~
 /config/initializers/secret_token.rb
@@ -363,7 +358,6 @@ Add the following lines to your `.gitignore`:
 /public/spree/
 /public/assets/
 /.vagrant/
-/vendor/
 package.box
 *.sql
 *.tar
@@ -421,6 +415,10 @@ vagrant up
 - `vagrant halt` - stop a vagrant machine
 - `vagrant reload` - reboot a vagrant machine
 - `vagrant destroy` - delete a vagrant machine from disk
+- `vagrant box list` - list local boxes
+- `vagrant package` - create a package.box file from the current machine
+- `vagrant box add boxname [url|local file]` - add boxname to your boxes
+- `vagrant box remove boxname` - remove boxname from your boxes
 
 </div>
 
@@ -446,29 +444,50 @@ While that's going, you can start configuring the deployment service.
 Go to <http://spreecommerce.com/> and login (register if you haven't
 already).
 
-Once you're logged in, go to the _My Account_ section and click the
-_Stores_ heading.  Create a new store and call it whatever you want,
-just include the 1.3 version in there somewhere.  The url is arbitrary,
-just put in something unique which also contains the 1.3 version.
-Label can be "production".
+<div class="well" markdown="1">
 
-Click the _Register_ button.  Now under _Add Ons_, click _Add Deployment
-Service_.
+As I note up top, you'll need to visit <http://spreecommerce.com/stores>
+directly to manage your stores for the moment.  Looks like this part of
+the new spree site is still under construction.
+
+</div>
+
+Once you're logged in, go to the _My Account_ section and click the
+_Stores_ heading.  Click _New Store_.
+
+![new store button]{: .well}
+
+Create a new store and call it "store.mydomain.com", using your domain
+instead of that one.  The url is arbitrary, just use
+"http://store.mydomain.com".  Label can be "production".  Click the
+_Register_ button.
+
+![register button]{: .well}
+
+Now under _Add Ons_, click _Add Deployment Service_.
 
 Leave the environment as "Production".  For Ruby Version, choose
-"1.9.3-p392".  For Spree Version, choose "1.3.x".
+"1.9.3-p392".  For Spree Version, choose "1.3.x".  Add the git url for
+your repository like: `git://github.com/username/store-1-3`.  Then click
+_Add_.
 
-Note that I'm specifying Ruby 1.9.3 because although 2.0 is strongly
-preferable, the puppet scripts are not compatible with 2.0.  If you
-select ruby 2.0, your install will fail (at least as of this writing).
-
-Add the git url for your repository like:
-`git://github.com/username/store-1-3`.  Then click _Add_.
+![environment details]{: .well}
 
 Note that I'm using the read-only version of the git url.  That's
 because I never edit code on the production or staging servers and never
 write from them to the git repo.  I don't store git credentials on a
 production server anyway, so I wouldn't be able to.
+
+<div class="well" markdown="1">
+
+#### The Deployment Service and Ruby Versions
+
+Note that I'm specifying ruby 1.9.3 because although 2.0 is strongly
+preferable, the deployment service's puppet scripts are not compatible
+with 2.0 as of this writing.  If you select ruby 2.0, your install will
+fail.
+
+</div>
 
 That gets us to the point where the store parameters are known but the
 server parameters need to be specified.  Under the _Add Server_ section,
@@ -477,16 +496,29 @@ put in a fully-qualified domain name such as "store.mydomain.com"
 
 For IP, just use "127.0.0.1".  Select the "App Server" and "DB Server"
 roles, then select "2" for the number of unicorn workers.  Click _Add_.
+
+![add server]{: .well}
+
+<div class="well" markdown="1">
+
+#### Unicorn Workers
+
 When you configure the real server, you'll want to set the number of
 unicorn workers to the number of cores on your production server or "2",
 whichever is greater.
 
+</div>
+
 Since that's the only server we'll need, go back up and select
 "Complete" for Configuration Status, then click _Update_.
 
+![configuration complete]{: .well}
+
 At this point you'll need to wait a minute for the deployment service to
 generate your configuration.  Take a moment to check that vagrant
-finished configuring your server.
+finished configuring your server.  You'll see an error about the window
+system drivers failing to install, that's fine because this is a server
+with no window system.
 
 When you're ready, run:
 
@@ -494,31 +526,50 @@ When you're ready, run:
 vagrant ssh #this logs you into the vagrant box as user "vagrant"
 sudo apt-get update -qq
 sudo apt-get install -y curl vim nodejs
-sudo vim /etc/ssh/sshd_config
 ~~~
 
-The vagrant box will already have the following line but regular Ubuntu
-won't.  If it's not at the bottom of the file already, add the line:
+<div class="well" markdown="1">
+
+#### Software
+
+If there is any other standard software you like to have installed on
+your machines, this is a good time to install it.  This box will be
+packaged and redistributable, so get it in there now.
+
+I've got a [gist of software install commands] I like to use for my
+customized boxes.
+
+</div>
+
+<div class="well" markdown="1">
+
+#### SSH Configuration on Non-Vagrant Ubuntu
+
+The vagrant box will already have reverse DNS lookup on ssh connections
+disabled, but regular Ubuntu won't.  If you're using regular Ubuntu,
+edit the file `/etc/ssh/sshd_config` and add the following line at the
+end:
 
 ~~~
 UseDNS no
 ~~~
 
-Uncomment the line:
-
-~~~
-PasswordAuthentication yes
-~~~
-
-Save, exit and continue:
+Save and exit, then run:
 
 ~~~
 sudo service ssh restart
+~~~
+
+</div>
+
+Now:
+
+~~~
 sudo cp /etc/sudoers .
 sudo vim /etc/sudoers.d/spree
 ~~~
 
-Add the line:
+Add the line (or see [spree sudoers gist]):
 
 ~~~
 spree ALL=NOPASSWD: /usr/local/bin/bluepill
@@ -528,7 +579,7 @@ Save and exit.
 
 ~~~
 sudo chmod 440 /etc/sudoers.d/spree
-sudo -s
+sudo -i
 ~~~
 
 This will give you a root login session, which is what the deployment
@@ -540,12 +591,14 @@ section.  Cut and paste this command into the vagrant box, then go get a
 cup of coffee/tea/etc.  Scratch that, go get a meal.  This is going to
 take a while.
 
+![initialize server]{: .well}
+
 You may see some error messages go by while the machine is installing.
 That's normal.  Unless it crashes with an error, don't worry about it.
 
 <div class="well" markdown="1">
 
-#### A Note About Security
+#### Security
 
 I don't trust my production system, so I never use it to log in anywhere
 else on the network.  Therefore I don't usually generate ssh keys on it,
@@ -563,16 +616,25 @@ whitelisted IPs (or no IPs) from outside your network can reach the ssh
 port on your server.  Passwords are _not_ a safe way of securing your
 ssh server.
 
+There's probably quite a bit to be said about mysql security as well
+which I'm not much of an expert on.  I make sure that there's only local
+machine access to my database and that all of the accounts have
+passwords.  I've left root without a password to simplify the
+instructions here, but take care to secure your mysql instance better
+than that.
+
 </div>
 
 When the install is finished (errors and all), go back to the spree site
-and visit the deployment page for your store.  There will now be a new
-command available under _Update Configuration_.  Copy and paste it into
-the vagrant box, replacing the password with what you'd like the
-database password to be.  I'll set mine to "spree".
+and visit the deployment page for your store.  Refresh the page if you
+have to.
+
+There will now be a new command available under _Update Configuration_.
+Copy and paste it into the vagrant box, replacing the password with what
+you'd like the database password to be.  I'll set mine to "spree".
 
 ~~~
-FACTER_db_pass=spree puppet agent --test --certname store-1-3.mydomain.com
+FACTER_db_pass=spree puppet agent --test --certname store.mydomain.com
 ~~~
 
 Exit the root shell.
@@ -636,20 +698,10 @@ sudo vim /etc/login.defs
 Change the UMASK line to:
 
 ~~~
-UMASK 007
+UMASK 002
 ~~~
 
 Save and exit.  Log off and `vagrant ssh` back in.
-
-<div class="well" markdown="1">
-
-#### Software
-
-If there is any other standard software you like to have installed on
-your machines, this is a good time to install it.  This box will be
-packaged and redistributable, so get it in there now.
-
-</div>
 
 Now:
 
@@ -667,7 +719,7 @@ cd config
 vim secret_token.rb
 ~~~
 
-Paste in the following:
+Paste in the following (or see [secret_token.rb gist]):
 
 ~~~
 Store::Application.config.secret_token = 'my secret is at least thirty characters long'
@@ -694,7 +746,7 @@ want to use.
 vim devise.rb
 ~~~
 
-Paste:
+Paste (or see [devise.rb gist]):
 
 ~~~
 Devise.secret_key = 'my secret is at least thirty characters long'
@@ -745,6 +797,40 @@ app.gid = "www-data"
 ~~~
 
 Save and exit.
+
+<div class="well" markdown="1">
+
+#### Groups and Setgid
+
+On a production machine, you shouldn't be sharing an account to
+administer it, such as the spree account.  In order to have proper
+accounting of who is doing what on the server, accounts should never be
+shared.
+
+As it happens, vagrant doesn't want to log in as the spree user anyway,
+so it's best just to establish good practices and make it so you can
+administer spree properly from the vagrant account anyway.  While you
+could sudo to the spree account all of the time, it's more convenient to
+allow your admins to work in the spree folder correctly without sudo.
+
+We've added the vagrant user to the "www-data" and "spree" groups, which
+gives it write access into the `/data/spree` folder tree.  We also need
+to make the converse true so that the spree user can use the files
+written by the vagrant account.
+
+We've changed the default umask so that files we write will allow the
+group to have control.  The `find` command above also sets the setgid
+bit on all of the directories in the tree so that any files written to
+the tree automatically get the shared group assigned, not the user's
+default group.
+
+Finally, we need the spree process on the machine to run with the group
+id, rather than group "spree".  That's what changing "app.gid" in the
+`master.pill.erb` file does.
+
+This setup saves you a multitude of small headaches.
+
+</div>
 
 # The Vagrant Package
 
@@ -801,16 +887,16 @@ vagrant init
 vim Vagrantfile
 ~~~
 
-Comment out the line:
+Comment out the line (or see [initial Vagrantfile gist]):
 
 ~~~
 # config.vm.box = "base"
 ~~~
 
-Before the final "end" in the file, add the lines:
+Before the final "end" in the file, add the lines :
 
 ~~~
-config.vm.define "production" do |production|
+config.vm.define 'production' do |production|
   production.vm.box = 'spree-base'
   production.vm.network :forwarded_port, guest: 80, host: 8081
 end
@@ -818,15 +904,20 @@ end
 
 Save and exit.
 
-Finally:
+Now:
 
 ~~~
 vagrant up
 vagrant ssh
+sudo hostname production-1-3
 ~~~
 
-On the vagrant box, change "staging" to "production" in these two files
-(use sudo on the second):
+Use `sudo vim` to change "store" to "production-1-3" in these two files:
+
+- `/etc/hosts`
+- `/etc/hostname`
+
+Change "staging" to "production" in the files (use sudo on the second):
 
 - `/data/spree/shared/config/Procfile`
 - `/etc/profile.d/set_env_vars.sh`
@@ -903,6 +994,8 @@ id from the id file.
 
 </div>
 
+<div class="well" markdown="1">
+
 # SSH and localhost
 
 One of the things we're going to be doing a lot of is ssh'ing to the
@@ -921,6 +1014,8 @@ UserKnownHostsFile /dev/null
 ~~~
 
 This needs to go at the top of the file, in my experience.
+
+</div>
 
 # Capistrano
 
@@ -965,8 +1060,12 @@ Go back to the spree commerce website and go to the deployment service
 page for the store.  Underneath the _Environment Details_ section, under
 _Git url for your application_, there is a link to a capistrano recipe.
 
+![capistrano recipe]{: .well}
+
 Click the link, then copy and replace the contents of the file
-`config/deploy.rb` in your project.
+`config/deploy.rb` in your project (or skip the following edits and use
+my [initial capistrano recipe gist]).  If you use my gist, change the
+repository url to include your name.
 
 Edit the file and change the following lines to include the vagrant port
 number "2222":
@@ -984,6 +1083,10 @@ run "ln -nfs #{shared_path}/spree #{release_path}/public/spree"
 run "ln -nfs #{shared_path}/config/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
 ~~~
 
+<div class="well" markdown="1">
+
+#### Simple Capistrano Mistakes
+
 Capistrano will only deploy changes which have already been pushed to
 the repository url supplied to the deployment service.  It's an easy
 mistake to commit development changes and forget to push them to the
@@ -997,7 +1100,9 @@ branch, remember that you will need to merge or rebase those changes
 onto the branch configured in capistrano in order for those to make it
 to production (the "master" branch in our example here).
 
-Let's commit our changes in preparation to do so:
+</div>
+
+Let's commit our changes:
 
 ~~~
 git add .
@@ -1082,12 +1187,7 @@ For now, generate some sample data:
 ~~~
 vagrant ssh
 cd /data/spree/current
-bundle exec rake db:seed
-~~~
-
-Press enter twice to accept the default admin username and password.
-
-~~~
+bundle exec rake db:seed AUTO_ACCEPT=1
 bundle exec rake spree_sample:load
 ~~~
 
@@ -1136,7 +1236,7 @@ If you're working with sample data, it's easy to erase mistakes and
 start over with a clean database.
 
 ~~~
-bundle exec rake db:reset
+bundle exec rake db:reset AUTO_ACCEPT=1
 bundle exec rake spree_sample:load
 ~~~
 
@@ -1148,6 +1248,11 @@ above commands again.
 
 # Configuring the Project for Staging
 
+We could move on to version 2.1 at this point, but if you're serious
+about deploying an upgrade, you're going to want to run through the
+_entire_ process, including deployment, without taking down your real
+production server.  That's what staging is for.
+
 We'll need two things.  The first is a staging environment file.
 
 ~~~
@@ -1156,7 +1261,8 @@ cp production.rb staging.rb
 vim staging.rb
 ~~~
 
-Change the line with local requests to true:
+Change the line with local requests to true (or use this [1.3 staging.rb
+gist]):
 
 ~~~
 config.consider_all_requests_local       = true
@@ -1175,7 +1281,8 @@ Unfortunately, that requires using ssl, which is a pain to set up with
 vagrant.  Instead, there's another way.  We'll tell the project not to
 use ssl in staging.
 
-Find the file `config/initializers/spree.rb` and modify the section:
+Find the file `config/initializers/spree.rb` and modify the section (or
+use this [spree.rb gist]):
 
 ~~~
 Spree.config do |config|
@@ -1196,26 +1303,15 @@ git push
 
 # Configuring Capistrano for Staging
 
-We could move on to version 2.1 at this point, but if you're serious
-about deploying an upgrade, you're going to want to run through the
-_entire_ process, including deployment, without taking down your real
-production server.  That's what staging is for.
-
-Since we haven't set up MySQL on the development machine, we're also
-going to happen to use the staging box to do the upgrade itself, since
-that needs to happen in MySQL as well.  You could do it in development,
-and that's probably actually preferable, but we're going to go with
-a staging box for now.
-
-We're going to need another box for this purpose, so first let's set up
-the project.
+The other thing we'll need is a capistrano staging configuration.
 
 ~~~
 cd config
 vim deploy.rb
 ~~~
 
-Remove the lines:
+Remove the lines (or use this [capistrano recipe gist], changing repo
+username):
 
 ~~~
 set :rails_env, 'production'
@@ -1249,7 +1345,7 @@ cd deploy
 vim production.rb
 ~~~
 
-Now add:
+Now add (or use this [production.rb gist]):
 
 ~~~
 set :branch,      "master"
@@ -1268,14 +1364,14 @@ Save and exit. Now:
 vim staging.rb
 ~~~
 
-Add:
+Add (or use this [staging.rb gist]):
 
 ~~~
 set :branch,      "staging"
 set :rails_env, 'staging'
-role :web, 'localhost:2222'
-role :app, 'localhost:2222'
-role :db,  'localhost:2222', :primary => true
+role :web, '127.0.0.1:2222'
+role :app, '127.0.0.1:2222'
+role :db,  '127.0.0.1:2222', :primary => true
 ~~~
 
 This tells capistrano to address two different servers, one for staging
@@ -1325,15 +1421,12 @@ environment is being called in `/data/spree/shared/config/unicorn.rb`
 
 </div>
 
-Let's add these files to the repository and then create our staging
-branch:
+Let's add these files to the repository:
 
 ~~~
 git add .
 git commit -m "add staging to capistrano"
 git push
-git checkout -b staging
-git push -u origin staging
 ~~~
 
 # Configuring Vagrant for Staging
@@ -1349,7 +1442,7 @@ work for both machines:
 vim Vagrantfile
 ~~~
 
-Add the lines:
+Add the lines (or use this [Vagrantfile gist]):
 
 ~~~
 config.vm.define "staging", primary: true do |staging|
@@ -1358,16 +1451,100 @@ config.vm.define "staging", primary: true do |staging|
 end
 ~~~
 
+Save and exit, then commit the new Vagrantfile:
+
+~~~
+git add .
+git commit -m "configure vagrant for staging"
+git push
+~~~
+
+Let's also set up a staging branch for our work with the staging server:
+
+~~~
+git checkout -b staging
+git push -u origin staging
+~~~
+
+<div class="well" markdown="1">
+
+#### Git Workflow with Staging
+
+There are many ways to do git workflow.
+
+I'm going to do all of my work on the staging branch, which is the only
+branch which will push to the staging server.
+
+Once I'm happy with the commits on that branch, I'll merge them to the
+master branch, which pushes to production:
+
+~~~
+git commit -m "some staging work"
+git push
+git checkout master
+git merge staging
+git push
+git checkout staging
+~~~
+
+You may prefer a different workflow such as rebasing.  I don't think
+that will work if it removes the staging branch in the process, but I
+can't really speak to that.
+
+One advantage of not working on the master branch directly is that you
+can be interrupted while working on staging to fix some pressing issue
+on master.  Just commit your staging branch without merging to master,
+go work on master (or branch from master and merge) and deploy, then
+switch back to staging.
+
+</div>
+
+Now:
+
+~~~
+vagrant up #this will bring up both machines now
+vagrant ssh #this will connect to staging, the primary machine
+sudo hostname staging-1-3
+~~~
+
+Use sudo vim to change "store" to "staging-1-3" in these two files:
+
+- `/etc/hosts`
+- `/etc/hostname`
+
+Log off the staging box, then:
+
+~~~
+bundle exec cap deploy:cold
+~~~
+
+Once that's done, seed the database:
+
+~~~
+vagrant ssh
+cd /data/spree/current
+bundle exec rake db:seed AUTO_ACCEPT=1
+~~~
+
+Logout of the vagrant box.
+
+Verify by going to <http://localhost:8080/>.  You should also be able to
+visit <http://localhost:8080/admin>.  Username is "spree@example.com"
+and password is "spree123".
+
+Leave the staging and production vagrant boxes running, which will be
+important for the next step.
+
 <div class="well" markdown="1">
 
 #### Multimachine Vagrant
 
-You can learn more by googling "multimachine vagrant".  The important
-thing to know is that when you use the multimachine syntax in your
-Vagrantfile (as we've done), all vagrant commands will take a machine
-name after the normal command, such as `vagrant status staging`.  Some
-commands will require a machine name, but ones that can operate on both
-machines (such as `vagrant up`) will do so if you don't specify a
+You can learn more by visiting the [vagrant multimachine page].  The
+important thing to know is that when you use the multimachine syntax in
+your Vagrantfile (as we've done), all vagrant commands will take a
+machine name after the normal command, such as `vagrant status staging`.
+Some commands will require a machine name, but ones that can operate on
+both machines (such as `vagrant up`) will do so if you don't specify a
 machine.  Be conscious of which machine you want to be affecting.
 
 Also, you may or may not want to run multiple machines at a time, given
@@ -1383,46 +1560,6 @@ machines up then not mess with them.
 
 </div>
 
-Save and exit.  Now:
-
-~~~
-vagrant up #this will bring up both machines now
-vagrant ssh production
-sudo hostname production-1-3
-~~~
-
-Change "staging" to "production" in the files (use sudo on the second):
-
-- `/data/spree/shared/config/Procfile`
-- `/etc/profile.d/set_env_vars.sh`
-
-Use vim to change "store" to "production-1-3" in these two files:
-
-- `/etc/hostname`
-- `/etc/hosts`
-
-Log off the production box, then:
-
-~~~
-vagrant ssh #this will connect to staging, the primary machine
-sudo hostname staging-1-3
-~~~
-
-Use vim to change "store" to "staging-1-3" in the same two files as
-above.
-
-Log off the staging box, then:
-
-~~~
-bundle exec cap deploy:cold
-~~~
-
-Verify by going to <http://localhost:8080/>.  You should also be able to
-visit <http://localhost:8080/admin>.
-
-Leave the staging vagrant box running, which will be important for the
-next step.  Make sure the production box is not running, however.
-
 # Spree 2.1
 
 Now that we've got our old store set up, let's get our new one.
@@ -1435,10 +1572,22 @@ gem install rails -v 4.0.2
 rails _4.0.2_ new store
 mv store store-2-1
 cd store-2-1
+vim config/initializers/devise.rb
+~~~
+
+Paste (or see [devise.rb gist]):
+
+~~~
+Devise.secret_key = 'my secret is at least thirty characters long'
+~~~
+
+Save and exit.  Now:
+
+~~~
 vim Gemfile
 ~~~
 
-This looks mostly like it did for the 1.3 store:
+This looks mostly like it did for the 1.3 store (or see [2.1 Gemfile gist]):
 
 ~~~
 gem 'mysql2', :groups => :production
@@ -1474,19 +1623,8 @@ gem 'spree_auth_devise', :git => 'https://github.com/spree/spree_auth_devise.git
 Save and exit.  Now:
 
 ~~~
-vim config/initializers/devise.rb
-~~~
-
-Paste:
-
-~~~
-Devise.secret_key = 'my secret is at least thirty characters long'
-~~~
-
-Save and exit.  Now:
-
-~~~
-bundle install --without production test
+bundle install --without production test #this will throw an error
+bundle update #this will fix the error
 bundle exec spree install --auto-accept
 ~~~
 
@@ -1500,16 +1638,15 @@ as well if it had been a real store.
 vim Gemfile
 ~~~
 
-Replace the spree gem line with:
+Replace the spree gem line with (or use the [final 2.1 Gemfile gist]):
 
 ~~~
 gem 'spree', :github => 'spree/spree', :branch => '2-1-stable'
 ~~~
-
 Save and exit.  Now:
 
 ~~~
-bundle update
+bundle update spree
 bundle exec rake railties:install:migrations
 bundle exec rake db:migrate
 bundle exec rails s
@@ -1523,15 +1660,17 @@ server.
 #### Updating the Bundle
 
 When updating spree to the latest commit in the branch, the above set of
-commands will become familiar.  They're a staple of my maintenance, with
-one exception.  I normally will use `bundle update spree` instead of
-`bundle update` by itself.
+commands will become familiar.  We've just done a mini-upgrade of spree,
+from the 2.1 release to 2.1-stable latest.  Those commands are a staple
+of maintenance.
 
-`bundle update` revisits every gem in the Gemfile, upgrading to the
-latest if possible.  There's a much bigger risk of things breaking if
-you update every possible gem, especially when you know most things are
-working and you don't need to.  `bundle update spree` only updates the
-spree gem and its dependencies, reducing the risk of change.
+One thing to be aware of is the difference between `bundle update` and
+`bundle update spree`.  You want to use the latter usually, not the
+former.  `bundle update` revisits every gem in the Gemfile, upgrading to
+the latest if possible.  There's a much bigger risk of things breaking
+if you update every possible gem, especially when you know most things
+are working and you don't need to.  `bundle update spree` only updates
+the spree gem and its dependencies, reducing the risk of change.
 
 I used `bundle update` here since this is a new install and we want the
 latest of everything as our starting point.  Since this store's never
@@ -1550,7 +1689,7 @@ git init
 vim .gitignore
 ~~~
 
-Add the following lines to your `.gitignore`:
+Add the following lines to your `.gitignore` (or same [.gitignore gist]):
 
 ~~~
 /config/initializers/secret_token.rb
@@ -1559,7 +1698,6 @@ Add the following lines to your `.gitignore`:
 /public/spree/
 /public/assets/
 /.vagrant/
-/vendor/
 package.box
 *.sql
 *.tar
@@ -1601,24 +1739,28 @@ Copy the following files from `store-1-3`:
 - `config/deploy/staging.rb`
 
 In `Vagrantfile`, edit the port forwarding to forward port 80 to port
-8082 for the staging machine.  When you're done with the migration, you
-may want to change this back to 8080 when you don't need the 1.3
-machines any more.
+8082 for the staging machine (or use the [final Vagrantfile gist]).
+Also comment out production since we won't need it at the moment.
 
-In `config/deploy/staging.rb`, edit the port to be 2201.  This is the
-port assigned by vagrant to the third machine brought up.  That means
-that the 1.3 staging and production machines will need to be up first.
-When you're done with the two 1.3 machines after the migration, you'll
-want to change this back to 2222.
+When you're done with the migration, you may want to change this back to
+8080 when you don't need the 1.3 machines any more.
 
 In `config/deploy.rb`, edit the repository url to point to
-`git://github.com/username/store-2-1`. Also add the line:
+`git://github.com/username/store-2-1` (or see the [final capistrano
+recipe gist]). Also add the line:
 
 ~~~
 run "ln -nfs #{shared_path}/config/devise.rb #{release_path}/config/initializers/devise.rb"
 ~~~
 
 to the deployment section with the other lines generating symlinks.
+
+In `config/deploy/staging.rb`, edit the port to be 2201 (or see the
+[final staging.rb gist]).  This is the port assigned by vagrant to
+the third machine brought up.  That means that the 1.3 staging and
+production machines will need to be up first.  When you're done with the
+two 1.3 machines after the migration, you'll want to change this back to
+2222.
 
 Now:
 
@@ -1628,7 +1770,7 @@ cp production.rb staging.rb
 vim staging.rb
 ~~~
 
-Change the local requests line to:
+Change the local requests line to (or see the [2.1 staging.rb gist]):
 
 ~~~
 config.consider_all_requests_local       = true
@@ -1648,10 +1790,10 @@ vagrant ssh
 sudo hostname staging-2-1
 ~~~
 
-Use vim to change "store" to "staging-2-1" in both of these files:
+Use `sudo vim` to change "store" to "staging-2-1" in both of these files:
 
-- `/etc/hostname`
 - `/etc/hosts`
+- `/etc/hostname`
 
 Log off the vagrant box and run:
 
@@ -1714,9 +1856,10 @@ Let's also create a temporary git branch for our work.
 
 ~~~
 cd store-1-3
+rm -rf tmp/cache #sometimes the cache interferes with upgrades
 git checkout -b 2-1-upgrade
-cp ../store-2-1/Gemfile .
-bundle update
+cp ../store-2-1/Gemfile* .
+bundle install
 ~~~
 
 Now we need to update the Rails environment files and the application
@@ -1740,12 +1883,12 @@ git rm db/migrate/*spree_promo_one_two.spree_promo.rb
 In the following two sets of files, remove the lines which refer to
 "spree_promo".
 
-In the first set, change "spree_core" to "spree_frontend":
+In the first set, also change "spree_core" to "spree_frontend":
 
 - `app/assets/javascripts/store/all.js`
 - `app/assets/stylesheets/store/all.css`
 
-In the second set, change "spree_core" to "spree_backend":
+In the second set, also change "spree_core" to "spree_backend":
 
 - `app/assets/javascripts/admin/all.js`
 - `app/assets/stylesheets/admin/all.css`
@@ -1767,6 +1910,26 @@ git add .
 git commit -m "upgrade to spree 2.1"
 ~~~
 
+<div class="well" markdown="1">
+
+#### Missing Template "spree_application" Error
+
+For the longest time I couldn't figure out why I'd get this error
+sometimes on my dev machine when attempting the upgrade.
+
+The instructions I give above avoid that error.  The magic secret is:
+
+~~~
+rm -rf tmp/cache
+~~~
+
+For some reason, this directory is the source of all kinds of weird
+errors whenever it doesn't like what you've done.  It's now my go-to
+first response to any kind of unexpected error, for sanity's sake.
+Don't worry, the directory regenerates itself.
+
+</div>
+
 # A Trial Deployment with Sample Data
 
 I really like to close the circle to deployment as quickly as possible
@@ -1774,9 +1937,9 @@ so I know that the basic process is ok before adding complexity.
 
 We have a staging machine ready to do this.  While this won't be wholly
 indicative of how the deployment will go with 2.1, since we'll be using
-the 1.3 machine to test here and 2.1 has a whole different repository
-and dataset, but it will tell us that the regular spree process is
-sound.  It's important to have a working baseline.
+the 1.3 machine to test here and our 2.1 app has a whole different
+repository and schema, but it will tell us that the regular spree
+process is sound.  It's important to have a working baseline.
 
 You'll want the 1.3 staging machine to have a copy of the sample data.
 We'll go through the instructions to generate that as we did on the fake
@@ -2114,3 +2277,39 @@ can you do?
 I meant to write some other stuff as well, but this should keep you busy
 enough I think.  I'd love feedback and will try to incorporate good
 suggestions into the post.  Thanks for reading!
+
+[virtualbox]: http://www.virtualbox.org/
+[vagrant]: http://www.vagrantup.com/
+[ruby]: http://www.ruby-lang.org/en/
+[git]: http://git-scm.com/
+[1.3 Gemfile gist]: https://gist.githubusercontent.com/binaryphile/9119293/raw/dad5587229d1f0e91c3b03f67cf7ebde9af4c1b5/Gemfile
+[spree guides]: http://guides.spreecommerce.com/developer/
+[.gitignore gist]: https://gist.githubusercontent.com/binaryphile/9119675/raw
+[new store button]: {{urls.media}}/new-store.png
+[register button]: {{urls.media}}/register.png
+[environment details]: {{urls.media}}/details.png
+[add server]: {{urls.media}}/add-server.png
+[configuration complete]: {{urls.media}}/complete.png
+[spree sudoers gist]: https://gist.githubusercontent.com/binaryphile/9120198/raw
+[initialize server]: {{urls.media}}/initialize.png
+[secret_token.rb gist]: https://gist.githubusercontent.com/binaryphile/9121402/raw
+[gist of software install commands]: https://gist.githubusercontent.com/binaryphile/9121958/raw
+[devise.rb gist]: https://gist.githubusercontent.com/binaryphile/9121453/raw
+[initial Vagrantfile gist]: https://gist.githubusercontent.com/binaryphile/9123813/raw/cfcb06316b1dc55502dd414e582621e7064d3643/Vagrantfile
+[capistrano recipe]: {{urls.media}}/capistrano.png
+[initial capistrano recipe gist]: https://gist.githubusercontent.com/binaryphile/9124108/raw/d8da24e4ff87fcc1f1f9791ec7e5fd7537eac95c/deploy.rb
+[1.3 staging.rb gist]: https://gist.githubusercontent.com/binaryphile/9124798/raw/b0fc8efa69415590f512414e461091e0301ab208/staging.rb
+[spree.rb gist]: https://gist.githubusercontent.com/binaryphile/9124857/raw
+[capistrano recipe gist]: https://gist.githubusercontent.com/binaryphile/9124108/raw/e2139abc25355a3a1185fc722d45a697ee964b10/deploy.rb
+[production.rb gist]: https://gist.githubusercontent.com/binaryphile/9124984/raw
+[staging.rb gist]: https://gist.githubusercontent.com/binaryphile/9125024/raw/1728d3e692ab6860734cd946c7848a838ae07885/staging.rb
+[Vagrantfile gist]: https://gist.githubusercontent.com/binaryphile/9123813/raw/14a22f68aa01d350226d8b65db07e102766efca9/Vagrantfile
+[vagrant multimachine page]: http://docs.vagrantup.com/v2/multi-machine/
+[2.1 Gemfile gist]: https://gist.githubusercontent.com/binaryphile/9119293/raw/20be39729d085d6a6d8e81576b946396b96f1357/Gemfile
+[final 2.1 Gemfile gist]: https://gist.githubusercontent.com/binaryphile/9119293/raw
+[final Vagrantfile gist]: https://gist.githubusercontent.com/binaryphile/9123813/raw
+[final staging.rb gist]: https://gist.githubusercontent.com/binaryphile/9125024/raw
+[final capistrano recipe gist]: https://gist.githubusercontent.com/binaryphile/9124108/raw
+[2.1 staging.rb gist]: https://gist.githubusercontent.com/binaryphile/9124798/raw
+[ansible configuration]: http://guides.spreecommerce.com/developer/ansible-ubuntu.html
+[manual configuration]: http://guides.spreecommerce.com/developer/manual-ubuntu.html
