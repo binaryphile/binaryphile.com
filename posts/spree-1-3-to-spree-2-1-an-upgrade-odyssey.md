@@ -15,8 +15,7 @@ instructions in this post.
 
 I've also noticed that the team has published an [ansible configuration]
 guide.  You may prefer to use that if you like ansible, or like having
-more direct control.  there's also a [manual configuration] guide as
-well.
+more direct control.  There's a [manual configuration] guide as well.
 
 # Prereqs
 
@@ -229,11 +228,11 @@ count on the fact that in the future, the spree community will be
 growing and that there will be more users who've created a store on the
 newer version than the old version with which I started.  By keeping my
 store in line with what the new users have, I'm keeping my store more
-supportable by being in the mainstream of users.  I'm less likely to
-experience oddball errors due to crufty configurations long abandoned by
-the Rails team.  I'm willing to go through the effort to keep myself
-positioned for future support and to avoid the compounding of cruft upon
-cruft that comes from a normal upgrade.
+supportable by being in the mainstream.  I'm less likely to experience
+oddball errors due to crufty configurations long abandoned by the Rails
+team.  I'm willing to go through the effort to keep myself positioned
+for future support and to avoid the compounding of cruft upon cruft that
+comes from a normal upgrade.
 
 The regular upgrade process typically involves updating your Gemfile to
 the latest versions in the appropriate places, then bundling and finally
@@ -444,6 +443,14 @@ you're mucking with machine ids as I note in the aside on dropbox.
 While that's going, you can start configuring the deployment service.
 Go to <http://spreecommerce.com/> and login (register if you haven't
 already).
+
+<div class="well" markdown="1">
+
+As I note up top, you'll need to visit <http://spreecommerce.com/stores>
+directly to manage your stores for the moment.  Looks like this part of
+the new spree site is still under construction.
+
+</div>
 
 Once you're logged in, go to the _My Account_ section and click the
 _Stores_ heading.  Click _New Store_.
